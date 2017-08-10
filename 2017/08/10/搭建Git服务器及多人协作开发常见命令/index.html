@@ -6,21 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://http://blog.llsevenr.cn">
-  <title>JavaScript常见集合操作 | 刘奕林的博客</title>
+  <title>搭建Git服务器及多人协作开发常见命令 | 刘奕林的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="集合的遍历for循环(效率最高) 优点：JavaScript最普遍的for循环，执行效率最高 缺点：无法遍历对象  123for(let i=0;i&amp;lt;array.length,i++)&amp;#123;    //operation&amp;#125; for…in循环(效率较低) 优点：唯一一个能够获取对象的属性名的遍历方式 缺点：会将对象通过继承得到的属性一齐遍历，造成非预料的结果且效率较低  123">
-<meta name="keywords" content="JavaScript,collection,集合,遍历">
+  <meta name="description" content="搭建Git服务器Github的项目必须为开放的并且在中国的访问速度如无特殊配置通常访问很慢，于是便想在自己的服务器上搭建Git仓库，同时也具备多人协作开发的能力。 配置Git和用户首先安装Git sudo apt install git 配置单独用来访问仓库的git用户 12groupadd gitadduser git -g git 创建SSL证书登录在支持bash的命令行下，输入 ssh-ke">
+<meta name="keywords" content="Git">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JavaScript常见集合操作">
-<meta property="og:url" content="http://http://blog.llsevenr.cn/2017/08/09/JavaScript常见集合操作/index.html">
+<meta property="og:title" content="搭建Git服务器及多人协作开发常见命令">
+<meta property="og:url" content="http://http://blog.llsevenr.cn/2017/08/10/搭建Git服务器及多人协作开发常见命令/index.html">
 <meta property="og:site_name" content="刘奕林的博客">
-<meta property="og:description" content="集合的遍历for循环(效率最高) 优点：JavaScript最普遍的for循环，执行效率最高 缺点：无法遍历对象  123for(let i=0;i&amp;lt;array.length,i++)&amp;#123;    //operation&amp;#125; for…in循环(效率较低) 优点：唯一一个能够获取对象的属性名的遍历方式 缺点：会将对象通过继承得到的属性一齐遍历，造成非预料的结果且效率较低  123">
-<meta property="og:image" content="http://otbwgn2nv.bkt.clouddn.com/ddbb7a0501334ed5b6fc3cf6adba1c8c.png">
-<meta property="og:updated_time" content="2017-08-10T10:56:02.894Z">
+<meta property="og:description" content="搭建Git服务器Github的项目必须为开放的并且在中国的访问速度如无特殊配置通常访问很慢，于是便想在自己的服务器上搭建Git仓库，同时也具备多人协作开发的能力。 配置Git和用户首先安装Git sudo apt install git 配置单独用来访问仓库的git用户 12groupadd gitadduser git -g git 创建SSL证书登录在支持bash的命令行下，输入 ssh-ke">
+<meta property="og:updated_time" content="2017-08-10T13:56:47.149Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JavaScript常见集合操作">
-<meta name="twitter:description" content="集合的遍历for循环(效率最高) 优点：JavaScript最普遍的for循环，执行效率最高 缺点：无法遍历对象  123for(let i=0;i&amp;lt;array.length,i++)&amp;#123;    //operation&amp;#125; for…in循环(效率较低) 优点：唯一一个能够获取对象的属性名的遍历方式 缺点：会将对象通过继承得到的属性一齐遍历，造成非预料的结果且效率较低  123">
-<meta name="twitter:image" content="http://otbwgn2nv.bkt.clouddn.com/ddbb7a0501334ed5b6fc3cf6adba1c8c.png">
+<meta name="twitter:title" content="搭建Git服务器及多人协作开发常见命令">
+<meta name="twitter:description" content="搭建Git服务器Github的项目必须为开放的并且在中国的访问速度如无特殊配置通常访问很慢，于是便想在自己的服务器上搭建Git仓库，同时也具备多人协作开发的能力。 配置Git和用户首先安装Git sudo apt install git 配置单独用来访问仓库的git用户 12groupadd gitadduser git -g git 创建SSL证书登录在支持bash的命令行下，输入 ssh-ke">
   
     <link rel="alternative" href="/atom.xml" title="刘奕林的博客" type="application/atom+xml">
   
@@ -166,63 +164,39 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-JavaScript常见集合操作" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-搭建Git服务器及多人协作开发常见命令" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      JavaScript常见集合操作
+      搭建Git服务器及多人协作开发常见命令
     </h1>
   
 
         
-        <a href="/2017/08/09/JavaScript常见集合操作/" class="archive-article-date">
-  	<time datetime="2017-08-09T13:37:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-09</time>
+        <a href="/2017/08/10/搭建Git服务器及多人协作开发常见命令/" class="archive-article-date">
+  	<time datetime="2017-08-10T10:35:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-10</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="集合的遍历"><a href="#集合的遍历" class="headerlink" title="集合的遍历"></a>集合的遍历</h2><h3 id="for循环-效率最高"><a href="#for循环-效率最高" class="headerlink" title="for循环(效率最高)"></a>for循环(效率最高)</h3><ul>
-<li>优点：JavaScript最普遍的for循环，执行效率最高</li>
-<li>缺点：无法遍历对象</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">for(let i=0;i&lt;array.length,i++)&#123;</div><div class="line">    //operation</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="for…in循环-效率较低"><a href="#for…in循环-效率较低" class="headerlink" title="for…in循环(效率较低)"></a>for…in循环(效率较低)</h3><ul>
-<li>优点：唯一一个能够获取对象的属性名的遍历方式</li>
-<li>缺点：会将对象通过继承得到的属性一齐遍历，造成非预料的结果且效率较低</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//会访问非继承的属性</div><div class="line">for(attr in object)&#123;//attr作为属性名</div><div class="line">    //object[attr]访问值</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//避免访问继承的属性</div><div class="line">for(attr in object)&#123;//attr作为属性名</div><div class="line">    if(object.hasOwnProperty(attr))&#123;</div><div class="line">        //object[attr]访问值        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="for…of循环-效率较高"><a href="#for…of循环-效率较高" class="headerlink" title="for…of循环(效率较高)"></a>for…of循环(效率较高)</h3><ul>
-<li>优点：能够快速访问非继承属性值</li>
-<li>缺点：需要ES6支持</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">for(item of object)&#123;</div><div class="line">    //item访问值</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="forEach方法-数组内置高阶方法，含义清晰"><a href="#forEach方法-数组内置高阶方法，含义清晰" class="headerlink" title="forEach方法(数组内置高阶方法，含义清晰)"></a>forEach方法(数组内置高阶方法，含义清晰)</h3><ul>
-<li>优点：函数式编程，简洁，快速领会代码含义</li>
-<li>缺点：无法对对象使用</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">array.forEach(function(item,index,array))&#123;</div><div class="line">    //item为值</div><div class="line">    //index为索引</div><div class="line">    //array为被访问数组</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<h3 id="Tips"><a href="#Tips" class="headerlink" title="Tips:"></a>Tips:</h3><ol>
-<li>在对对象进行遍历时，如不需要访问属性名选择<code>for...of</code>循环，如需访问属性名选择<code>for...in</code>循环</li>
-<li>在对数组进行访问时，使用<code>forEach</code>得到较好的可读性，传统的<code>for</code>循环能够带来很高的性能及拓展性</li>
-</ol>
-<h2 id="集合的操作"><a href="#集合的操作" class="headerlink" title="集合的操作"></a>集合的操作</h2><p>在小波老师提倡的想机器一样思考中，编程问题的解决被分为了输入，处理和输出</p>
-<blockquote>
-<p><img src="http://otbwgn2nv.bkt.clouddn.com/ddbb7a0501334ed5b6fc3cf6adba1c8c.png" alt="像机器一样思考"><br>引用自<a href="https://www.zybuluo.com/jtong/note/403738" target="_blank" rel="external">像机器一样思考（一）—— 宏观的基础</a></p>
-</blockquote>
-<p>处理，是对输入数据的处理，就可以分为从输入的数据中提炼出一定的有价值的数据，并对他们做出一些操作，得到希望得到的有价值的东西，并将他输出</p>
-<h3 id="Map映射"><a href="#Map映射" class="headerlink" title="Map映射"></a>Map映射</h3><p>Map映射是将输入的数据中有价值的东西提取出来，转化为更有利于处理的格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">let dataAfterProcess = array.map(function(item,index,array)&#123;</div><div class="line">    //item为值</div><div class="line">    //index为索引</div><div class="line">    //array为被访问数组</div><div class="line">    return ;//返回dataAfterProcess中希望被添加的元素</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
-<h3 id="Reduce计算"><a href="#Reduce计算" class="headerlink" title="Reduce计算"></a>Reduce计算</h3><p>Reduce计算以提取好的数据输入，并获得最终的<strong>一个</strong>结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">let output = array.reduce(function(accumulator, currentValue, currentIndex, array)&#123;</div><div class="line">    //accumulator为输出结果</div><div class="line">    //currentValue为遍历数组目前的值</div><div class="line">    //currentIndex为遍历数组目前的索引</div><div class="line">    //array为被访问数组</div><div class="line">    return ;//返回希望累加的操作</div><div class="line">&#125;,0);//0为计算结果的初始值，默认为数组第一个元素</div></pre></td></tr></table></figure></p>
-<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><p>在完成JS练习中，我时常会遇到以下问题待解决：</p>
-<ol>
-<li>在<code>Map</code>操作中，经常会遇到需要根据已有的目标数组的情况做出相应的映射操作，但目前尚未发现怎样在Map循环中检查已映射的目标数组</li>
-<li>为对象实现接口使对象也具有<code>MapReduce</code>操作的能力</li>
-</ol>
+        <h1 id="搭建Git服务器"><a href="#搭建Git服务器" class="headerlink" title="搭建Git服务器"></a>搭建Git服务器</h1><p>Github的项目必须为开放的并且在中国的访问速度如无特殊配置通常访问很慢，于是便想在自己的服务器上搭建Git仓库，同时也具备多人协作开发的能力。</p>
+<h2 id="配置Git和用户"><a href="#配置Git和用户" class="headerlink" title="配置Git和用户"></a>配置Git和用户</h2><p>首先安装Git</p>
+<p><code>sudo apt install git</code></p>
+<p>配置单独用来访问仓库的git用户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">groupadd git</div><div class="line">adduser git -g git</div></pre></td></tr></table></figure>
+<h2 id="创建SSL证书登录"><a href="#创建SSL证书登录" class="headerlink" title="创建SSL证书登录"></a>创建SSL证书登录</h2><p>在支持bash的命令行下，输入</p>
+<p><code>ssh-keygen -C &#39;your@email.com&#39; -t rsa</code></p>
+<p>为你生成rsa密钥，可以直接一路回车，执行默认操作，生成的密钥可以在这儿找到<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">C://users//&lt;电脑账户名&gt;//.ssh</div><div class="line">├── id_rsa</div><div class="line">└── id_rsa.pub #公钥 服务端需要里边内容验证连接着身份</div></pre></td></tr></table></figure></p>
+<p>将SSH添加到管理</p>
+<p><code>ssh-add id_rsa</code></p>
+<p>将公钥里面的内容完整输入至<code>/home/git/.ssh/authorized_keys</code>，一行一个密钥</p>
+<h2 id="TODO：多公钥管理"><a href="#TODO：多公钥管理" class="headerlink" title="TODO：多公钥管理"></a>TODO：多公钥管理</h2><p>在<code>.ssh</code>目录下配置<code>config</code>文件，再将SSH加入SSH管理，格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Host github.com             //连接域名</div><div class="line">  HostName github.com       //域名名称</div><div class="line">  User whatseven            //用户</div><div class="line">  IdentityFile C:\Users\whatseven\.ssh\id_rsa_github    //对应私钥</div><div class="line">  PreferredAuthentications publickey</div></pre></td></tr></table></figure></p>
+<h1 id="Git多人协作开发常用命令"><a href="#Git多人协作开发常用命令" class="headerlink" title="Git多人协作开发常用命令"></a>Git多人协作开发常用命令</h1><p>完成上述步骤，就能够在自己的服务器上建立仓库并且作为远程分支与本地分支建立联系了，下面是在多人协作开发的一些常用的Git命令。</p>
 
       
 
@@ -257,19 +231,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">JavaScript</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">collection</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">集合</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">遍历</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
         		</li>
       		
 		</ul>
@@ -281,7 +243,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/JavaScript/" class="article-tag-list-link color1">JavaScript</a>
+        			<a href="/categories/Git/" class="article-tag-list-link color4">Git</a>
         		</li>
       		
 		</ul>
@@ -336,7 +298,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://http://blog.llsevenr.cn/2017/08/09/JavaScript常见集合操作/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://http://blog.llsevenr.cn/2017/08/10/搭建Git服务器及多人协作开发常见命令/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -350,15 +312,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/08/10/搭建Git服务器及多人协作开发常见命令/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          搭建Git服务器及多人协作开发常见命令
-        
-      </div>
-    </a>
   
+    <a href="/2017/08/09/JavaScript常见集合操作/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JavaScript常见集合操作</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 

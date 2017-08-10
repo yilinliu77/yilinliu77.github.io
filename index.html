@@ -164,6 +164,103 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-搭建Git服务器及多人协作开发常见命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/10/搭建Git服务器及多人协作开发常见命令/">搭建Git服务器及多人协作开发常见命令</a>
+    </h1>
+  
+
+        
+        <a href="/2017/08/10/搭建Git服务器及多人协作开发常见命令/" class="archive-article-date">
+  	<time datetime="2017-08-10T10:35:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="搭建Git服务器"><a href="#搭建Git服务器" class="headerlink" title="搭建Git服务器"></a>搭建Git服务器</h1><p>Github的项目必须为开放的并且在中国的访问速度如无特殊配置通常访问很慢，于是便想在自己的服务器上搭建Git仓库，同时也具备多人协作开发的能力。</p>
+<h2 id="配置Git和用户"><a href="#配置Git和用户" class="headerlink" title="配置Git和用户"></a>配置Git和用户</h2><p>首先安装Git</p>
+<p><code>sudo apt install git</code></p>
+<p>配置单独用来访问仓库的git用户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">groupadd git</div><div class="line">adduser git -g git</div></pre></td></tr></table></figure>
+<h2 id="创建SSL证书登录"><a href="#创建SSL证书登录" class="headerlink" title="创建SSL证书登录"></a>创建SSL证书登录</h2><p>在支持bash的命令行下，输入</p>
+<p><code>ssh-keygen -C &#39;your@email.com&#39; -t rsa</code></p>
+<p>为你生成rsa密钥，可以直接一路回车，执行默认操作，生成的密钥可以在这儿找到<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">C://users//&lt;电脑账户名&gt;//.ssh</div><div class="line">├── id_rsa</div><div class="line">└── id_rsa.pub #公钥 服务端需要里边内容验证连接着身份</div></pre></td></tr></table></figure></p>
+<p>将SSH添加到管理</p>
+<p><code>ssh-add id_rsa</code></p>
+<p>将公钥里面的内容完整输入至<code>/home/git/.ssh/authorized_keys</code>，一行一个密钥</p>
+<h2 id="TODO：多公钥管理"><a href="#TODO：多公钥管理" class="headerlink" title="TODO：多公钥管理"></a>TODO：多公钥管理</h2><p>在<code>.ssh</code>目录下配置<code>config</code>文件，再将SSH加入SSH管理，格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Host github.com             //连接域名</div><div class="line">  HostName github.com       //域名名称</div><div class="line">  User whatseven            //用户</div><div class="line">  IdentityFile C:\Users\whatseven\.ssh\id_rsa_github    //对应私钥</div><div class="line">  PreferredAuthentications publickey</div></pre></td></tr></table></figure></p>
+<h1 id="Git多人协作开发常用命令"><a href="#Git多人协作开发常用命令" class="headerlink" title="Git多人协作开发常用命令"></a>Git多人协作开发常用命令</h1><p>完成上述步骤，就能够在自己的服务器上建立仓库并且作为远程分支与本地分支建立联系了，下面是在多人协作开发的一些常用的Git命令。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Git/" class="article-tag-list-link color4">Git</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/08/10/搭建Git服务器及多人协作开发常见命令/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-JavaScript常见集合操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -184,8 +281,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="JavaScript常见集合操作"><a href="#JavaScript常见集合操作" class="headerlink" title="JavaScript常见集合操作"></a>JavaScript常见集合操作</h1><hr>
-<h2 id="集合的遍历"><a href="#集合的遍历" class="headerlink" title="集合的遍历"></a>集合的遍历</h2><h3 id="for循环-效率最高"><a href="#for循环-效率最高" class="headerlink" title="for循环(效率最高)"></a>for循环(效率最高)</h3><ul>
+        <h2 id="集合的遍历"><a href="#集合的遍历" class="headerlink" title="集合的遍历"></a>集合的遍历</h2><h3 id="for循环-效率最高"><a href="#for循环-效率最高" class="headerlink" title="for循环(效率最高)"></a>for循环(效率最高)</h3><ul>
 <li>优点：JavaScript最普遍的for循环，执行效率最高</li>
 <li>缺点：无法遍历对象</li>
 </ul>
@@ -235,7 +331,19 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">JavaScript collection 集合 遍历</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">JavaScript</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">collection</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">集合</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">遍历</a>
         		</li>
       		
 		</ul>
@@ -257,77 +365,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/08/09/JavaScript常见集合操作/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/01/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/01/hello-world/" class="archive-article-date">
-  	<time datetime="2017-07-01T10:40:52.865Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/01/hello-world/">展开全文 >></a>
         </p>
       
 
@@ -450,7 +487,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JavaScript collection 集合 遍历</a>
+                <a href="javascript:void(0)" class="js-tag color1">JavaScript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">collection</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">集合</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">遍历</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
               </li>
             
             <div class="clearfix"></div>
