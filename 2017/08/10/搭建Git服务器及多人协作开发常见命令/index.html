@@ -15,10 +15,12 @@
 <meta property="og:url" content="http://http://blog.llsevenr.cn/2017/08/10/搭建Git服务器及多人协作开发常见命令/index.html">
 <meta property="og:site_name" content="刘奕林的博客">
 <meta property="og:description" content="搭建Git服务器Github的项目必须为开放的并且在中国的访问速度如无特殊配置通常访问很慢，于是便想在自己的服务器上搭建Git仓库，同时也具备多人协作开发的能力。 配置Git和用户首先安装Git sudo apt install git 配置单独用来访问仓库的git用户 12groupadd gitadduser git -g git 创建SSL证书登录在支持bash的命令行下，输入 ssh-ke">
-<meta property="og:updated_time" content="2017-08-10T13:56:47.149Z">
+<meta property="og:image" content="http://otbwgn2nv.bkt.clouddn.com/de249adc849a5e3ed721b3f4fc397e4d.png">
+<meta property="og:updated_time" content="2017-08-11T13:25:08.694Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="搭建Git服务器及多人协作开发常见命令">
 <meta name="twitter:description" content="搭建Git服务器Github的项目必须为开放的并且在中国的访问速度如无特殊配置通常访问很慢，于是便想在自己的服务器上搭建Git仓库，同时也具备多人协作开发的能力。 配置Git和用户首先安装Git sudo apt install git 配置单独用来访问仓库的git用户 12groupadd gitadduser git -g git 创建SSL证书登录在支持bash的命令行下，输入 ssh-ke">
+<meta name="twitter:image" content="http://otbwgn2nv.bkt.clouddn.com/de249adc849a5e3ed721b3f4fc397e4d.png">
   
     <link rel="alternative" href="/atom.xml" title="刘奕林的博客" type="application/atom+xml">
   
@@ -195,8 +197,32 @@
 <p>将SSH添加到管理</p>
 <p><code>ssh-add id_rsa</code></p>
 <p>将公钥里面的内容完整输入至<code>/home/git/.ssh/authorized_keys</code>，一行一个密钥</p>
-<h2 id="TODO：多公钥管理"><a href="#TODO：多公钥管理" class="headerlink" title="TODO：多公钥管理"></a>TODO：多公钥管理</h2><p>在<code>.ssh</code>目录下配置<code>config</code>文件，再将SSH加入SSH管理，格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Host github.com             //连接域名</div><div class="line">  HostName github.com       //域名名称</div><div class="line">  User whatseven            //用户</div><div class="line">  IdentityFile C:\Users\whatseven\.ssh\id_rsa_github    //对应私钥</div><div class="line">  PreferredAuthentications publickey</div></pre></td></tr></table></figure></p>
+<h2 id="Tips：多公钥管理"><a href="#Tips：多公钥管理" class="headerlink" title="Tips：多公钥管理"></a>Tips：多公钥管理</h2><p>在<code>.ssh</code>目录下配置<code>config</code>文件，<strong>再将SSH加入SSH管理</strong>，格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Host github.com             //连接域名</div><div class="line">  HostName github.com       //域名名称</div><div class="line">  User whatseven            //用户</div><div class="line">  IdentityFile C:\Users\whatseven\.ssh\id_rsa_github    //对应私钥</div><div class="line">  PreferredAuthentications publickey</div></pre></td></tr></table></figure></p>
 <h1 id="Git多人协作开发常用命令"><a href="#Git多人协作开发常用命令" class="headerlink" title="Git多人协作开发常用命令"></a>Git多人协作开发常用命令</h1><p>完成上述步骤，就能够在自己的服务器上建立仓库并且作为远程分支与本地分支建立联系了，下面是在多人协作开发的一些常用的Git命令。</p>
+<h2 id="建立裸仓库"><a href="#建立裸仓库" class="headerlink" title="建立裸仓库"></a>建立裸仓库</h2><p>在建好的服务器里新建文件夹，在文件夹下使用<code>git init --bare</code>新建裸仓库，只存放版本库信息。</p>
+<p>开发人员A上用<code>git clone 仓库地址 仓库在本机的命名</code>克隆仓库，开始自己的本地开发。</p>
+<h3 id="Tips：为什么要建立裸仓库？"><a href="#Tips：为什么要建立裸仓库？" class="headerlink" title="Tips：为什么要建立裸仓库？"></a>Tips：为什么要建立裸仓库？</h3><p>在Git中，如果向普通代码仓库push的话，Git会将推送的内容与工作文件进行比较，它会认为工作文件发生改变，从而影响工作树，常见的是在想远程目标的当前分支push代码时，在远程终端必须使用<code>git reset --hard</code>。而裸代码仓库由于没有工作树，所以push所含的变化仅影响裸代码仓库的版本控制。</p>
+<p><strong>在裸仓库中，工作目录下除了版本库信息没有任何东西，会给大家造成一个误解以为裸仓库只记录版本，没有文件。其实在Git系统中，文件是通过不同的对象例如索引，树，块存与版本库里面的，所以裸仓库看似工作目录是空的，在克隆裸仓库是git会将对象从版本库取出并根据版本更改信息组织到正确的位置</strong></p>
+<p>在开发过程中，一般会将项目分为几个分支。</p>
+<blockquote>
+<p><strong>Git分支策略</strong></p>
+<p><img src="http://otbwgn2nv.bkt.clouddn.com/de249adc849a5e3ed721b3f4fc397e4d.png" alt="Git分支策略"></p>
+</blockquote>
+<ol>
+<li><strong>master</strong>分支应该保存重大的版本或节点，开发前应保持远程与本地同步</li>
+<li><strong>dev</strong>是日常开发分支，平时的开发应在dev上进行，开发前应保持远程与本地同步</li>
+<li>剩下的是个人分支，个人的开发在个人分支上进行，在每天或者一个阶段的工作结束后每个人将自己的代码合并到dev分支上。个人分支不用同步至远程分支</li>
+</ol>
+<h2 id="开发实例"><a href="#开发实例" class="headerlink" title="开发实例"></a>开发实例</h2><p>下面通过两个开发人员实例演示多人开发：</p>
+<p>开发人员A通过<code>git clone git@111.111.111.111:/home/git/repo/test.git test.git</code>将远程的版本库克隆至本机</p>
+<p>如无dev分支，A通过<code>git checkout -b dev</code>从<strong>master</strong>分支创建<strong>dev</strong>分支</p>
+<p>A再次通过<code>git checkout -b A</code>从<strong>dev</strong>分支上创建自己的开发分支</p>
+<p>A在工作目录里新建内容为”A”的<strong>A.txt</strong>，再创建内容为”公共”的<strong>公共.txt</strong></p>
+<p>A通过<code>git add A.txt 公共.txt</code>与<code>git commit -m &quot;init A,公共&quot;</code>提交更改</p>
+<p>当A完成阶段性工作后，通过<code>git checkout dev</code>切换至开发分支，再通过<code>git merge --no-ff A</code>将<strong>A</strong>分支合并到<strong>dev</strong>分支,如有冲突则在文件中去删除多余部分</p>
+<p>A剩下的工作是要将自己的工作推到大家代码的源头–位于远程的裸仓库中，在Git中，本机Git版本库与远程库的连接是基于分支的，例如本机的<strong>master</strong>与远程的<strong>master</strong>有一条链接，本机的<strong>dev</strong>也应该与远程<strong>dev</strong>有一个链接。</p>
+<p>A通过在<strong>dev</strong>分支上<code>git push -u origin dev</code>将本机的<strong>dev</strong>分支的更新推送到远程<strong>dev</strong>分支上去，<code>-u</code>选项是指在未建立链接的情况下建立一条链接，以后推送更新就只用<code>git push</code>即可</p>
+<p>此时，A的工作已经全部做完了，当B开始工作时，他必须获取远程库的最新情况以保证自己的工作是建立在最新的工作上的，它可以在建立了链接的情况下通过<code>git pull</code>将远程更新拉到本地，后续操作类似A。</p>
 
       
 
