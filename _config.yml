@@ -3,10 +3,10 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 刘奕林的博客
+title: whatseven的博客
 subtitle: blog
-description: 刘奕林的博客
-author: 刘奕林
+description: whatseven的博客
+author: whatseven
 language: zh-CN
 timezone: Asia/Shanghai
 
@@ -63,7 +63,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: indigo
 
 jsonContent:
     meta: false
@@ -72,7 +72,7 @@ jsonContent:
       title: true
       date: true
       path: true
-      text: false
+      text: true
       raw: false
       content: false
       slug: false
@@ -83,6 +83,11 @@ jsonContent:
       excerpt: false
       categories: false
       tags: true
+
+feed:
+  type: atom
+  path: atom.xml
+  limit: 0
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
