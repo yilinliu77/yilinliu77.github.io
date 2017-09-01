@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://http://blog.llsevenr.cn/"/>
-  <updated>2017-08-30T07:10:07.629Z</updated>
+  <updated>2017-09-01T14:43:54.634Z</updated>
   <id>http://http://blog.llsevenr.cn/</id>
   
   <author>
@@ -16,11 +16,238 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>用OpenCV进行相机标定</title>
+    <link href="http://http://blog.llsevenr.cn/2017/09/01/%E7%94%A8OpenCV%E8%BF%9B%E8%A1%8C%E7%9B%B8%E6%9C%BA%E6%A0%87%E5%AE%9A/"/>
+    <id>http://http://blog.llsevenr.cn/2017/09/01/用OpenCV进行相机标定/</id>
+    <published>2017-09-01T10:50:13.000Z</published>
+    <updated>2017-09-01T14:43:54.634Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="相机标定的原理"><a href="#相机标定的原理" class="headerlink" title="相机标定的原理"></a>相机标定的原理</h1><h2 id="成像模型"><a href="#成像模型" class="headerlink" title="成像模型"></a>成像模型</h2><p>相机在计算机视觉应用中起着重要作用，作为图像数据来源，影响着后续各个处理步骤。成像模型就是用数学公式刻画整个成像过程，即被拍摄物体空间点到照片成像点之间的几何变换关系。</p>
+<p>总体上，相机成像可以分为四个步骤：刚体变换、透视投影、畸变校正和数字化图像。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/34b5e49d0d138be3658b2159e7bb5a75.png" alt="相机成像模型" title="">
+                </div>
+                <div class="image-caption">相机成像模型</div>
+            </figure>
+<h3 id="刚体变换"><a href="#刚体变换" class="headerlink" title="刚体变换"></a>刚体变换</h3><p>刚体变换只改变物体的空间位置(平移)和朝向(旋转)，而不改变其形状，可用两个变量来描述：旋转矩阵R和平移向量t</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/1ac9d44f769814d43792588d48c5ce3a.png" alt="刚体变换" title="">
+                </div>
+                <div class="image-caption">刚体变换</div>
+            </figure>
+<p>齐次坐标下可写为：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/a38e43248e0052a0300c4e1952f815ad.png" alt="刚体变换" title="">
+                </div>
+                <div class="image-caption">刚体变换</div>
+            </figure>
+<p>旋转矩阵R是正交矩阵，可通过罗德里格斯（Rodrigues）变换转换为只有三个独立变量的旋转向量：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/7e4b581b5276314cf76a148e0be3832d.png" alt="Rodrigues" title="">
+                </div>
+                <div class="image-caption">Rodrigues</div>
+            </figure>
+<p>因此，刚体变换可用6个参数来描述，这6个参数就称为相机的外参(Extrinsic)，相机外参决定了空间点从世界坐标系转换到相机坐标系的变换，也可以说外参描述了相机在世界坐标系中的位置和朝向。</p>
+<h3 id="透视投影"><a href="#透视投影" class="headerlink" title="透视投影"></a>透视投影</h3><p>我们可以将透镜的成像简单地抽象成下图所示：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/8e161a5c59f4dd7b03171e037a7fa475.png" alt="透视投影" title="">
+                </div>
+                <div class="image-caption">透视投影</div>
+            </figure>
+<p>设 f=OB 表示透镜的焦距，m=OC 为像距，n=AO 为物距，有：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/2c2568cb708d6d0b0f51b9828ea8f7ee.png" alt="焦距" title="">
+                </div>
+                <div class="image-caption">焦距</div>
+            </figure>
+<p>一般地，由于物距远大于焦距，即 n&gt;&gt;f，所以 m≈f，此时可以用小孔模型代替透镜成像：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/0f71e4f9c80acc9adc065707d2d3f775.png" alt="小孔成像" title="">
+                </div>
+                <div class="image-caption">小孔成像</div>
+            </figure>
+<p>可得：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/584e9339e90f767d3647d336babfe443.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>齐次坐标下有：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/26d8e6748631307ab47a3ab323c6f13f.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>如果将成像平面移到相机光心与物体之间，则有中心透视模型：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/c7d090d8018cfae40527a6f5d0e5feb9.png" alt="小孔" title="">
+                </div>
+                <div class="image-caption">小孔</div>
+            </figure>
+<p>可得：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/2780c41b044b11200613f679c97ec9c4.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>齐次坐标下有：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/3b7c10969a79e2c92611b1343c32aa89.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>总体上看，透视投影将相机坐标系中的点投影到理想图像坐标系，其变换过程只与相机焦距 f 有关。</p>
+<h3 id="畸变校正"><a href="#畸变校正" class="headerlink" title="畸变校正"></a>畸变校正</h3><p>理想的针孔成像模型确定的坐标变换关系均为线性的，而实际上，现实中使用的相机由于镜头中镜片因为光线的通过产生的不规则的折射，镜头畸变（lens distortion）总是存在的，即根据理想针孔成像模型计算出来的像点坐标与实际坐标存在偏差。畸变的引入使得成像模型中的几何变换关系变为非线性，增加了模型的复杂度，但更接近真实情形。畸变导致的成像失真可分为径向失真和切向失真两类：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/50da8ca21000a23c748c76ef05c11352.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>畸变类型很多，总体上可分为径向畸变和切向畸变两类，径向畸变的形成原因是镜头制造工艺不完美，使得镜头形状存在缺陷，包括枕形畸变和桶形畸变等，可以用如下表达式来描述：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/8d8ed2c69ab681cbf26e1107aae6f1ef.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>切向畸变又分为薄透镜畸变和离心畸变等，薄透镜畸变则是因为透镜存在一定的细微倾斜造成的；离心畸变的形成原因是镜头是由多个透镜组合而成的，而各个透镜的光轴不在同一条中心线上。切向畸变可以用如下数学表达式来描述：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/cb54b83eaf68817ae74384c6fb03696d.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>在引入镜头的畸变后，成像点从理想图像坐标系到真实图像坐标系的变换关系可以表示为：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/95a39188156939dab30d20ad4a418cac.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>实际计算过程中，如果考虑太多高阶的畸变参数，会导致标定求解的不稳定。</p>
+<h3 id="数字化图像"><a href="#数字化图像" class="headerlink" title="数字化图像"></a>数字化图像</h3><p>光线通过相机镜头后最终成像在感光阵列(CCD或CMOS)上，然后感光阵列将光信号转化为电信号，最后形成完整的图像。我们用dx和dy分别表示感光阵列的每个点在x和y方向上物理尺寸，即一个像素是多少毫米，这两个值一般比较接近，但由于制造工艺的精度问题，会有一定误差，同样的，感光阵列的法向和相机光轴也不是完全重合，即可以看作成像平面与光轴不垂直。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/8d88f7c57ed53c087c9d2138c43f08e6.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>我们用仿射变换来描述这个过程，如上图，O点是图像中心点，对应图像坐标(u0，v0)，Xd - Yd是真实图像坐标系，U-V是数字化图像坐标系，有：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/ef4348cdde922a5537937d10821cc703.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>齐次坐标下有：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/b749d14c0e8c5d9072682ea7f9b0f868.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>上式中的变换矩阵即为相机的内参数矩阵 K，其描述了相机坐标系中点到二维图像上点的变换过程。</p>
+<p>综上所述，在不考虑镜头畸变的情况下，相机的整个成像过程可表示为，其中R,T为旋转矩阵和平移矩阵，为相机的外参数：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/4d8fa276198b8e4437e8b4f7048cb349.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>若考虑畸变，则为</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/459e6e6b8ff1fb1cd8a529b6abaa2a0a.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h1 id="相机标定的步骤"><a href="#相机标定的步骤" class="headerlink" title="相机标定的步骤"></a>相机标定的步骤</h1><ol>
+<li>准备标定图片</li>
+<li>对每一张标定图片，提取角点信息</li>
+<li>对每一张标定图片，进一步提取亚像素角点信息</li>
+<li>相机标定</li>
+<li>查看标定效果——利用标定结果对棋盘图进行矫正</li>
+</ol>
+<h1 id="基于OpenCV的相机标定实现"><a href="#基于OpenCV的相机标定实现" class="headerlink" title="基于OpenCV的相机标定实现"></a>基于OpenCV的相机标定实现</h1><h2 id="定义全局变量"><a href="#定义全局变量" class="headerlink" title="定义全局变量"></a>定义全局变量</h2><p><strong>首先定义全局变量</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">#include &quot;opencv2/core/core.hpp&quot;</div><div class="line">#include &quot;opencv2/imgproc/imgproc.hpp&quot;</div><div class="line">#include &quot;opencv2/calib3d/calib3d.hpp&quot;</div><div class="line">#include &quot;opencv2/highgui/highgui.hpp&quot;</div><div class="line">#include &lt;iostream&gt;</div><div class="line">#include &lt;fstream&gt;</div><div class="line">#include &quot;Calibration.h&quot;</div><div class="line"></div><div class="line">using namespace cv;</div><div class="line">using namespace std;</div><div class="line"></div><div class="line">int image_count = 0;						// 图像数量</div><div class="line">Size board_size = Size(6, 4);				// 标定板上每行、列的角点数</div><div class="line"></div><div class="line">Size image_size;											// 图像的尺寸</div><div class="line">vector&lt;vector&lt;Point2f&gt;&gt; image_points_seq;					// 保存检测到的所有角点</div><div class="line">Mat cameraMatrix = Mat(3, 3, CV_32FC1, Scalar::all(0));		// 摄像机内参数矩阵</div><div class="line">Mat distCoeffs = Mat(1, 5, CV_32FC1, Scalar::all(0));		// 摄像机的5个畸变系数：k1,k2,p1,p2,k3</div><div class="line"></div><div class="line">void findCheese(string filename);</div><div class="line">void myCalibration(string filename);</div><div class="line">void correctFile();</div></pre></td></tr></table></figure></p>
+<h2 id="读入图片并寻找角点"><a href="#读入图片并寻找角点" class="headerlink" title="读入图片并寻找角点"></a>读入图片并寻找角点</h2><p><strong>然后读入储存图片路径的文本文件，读入图片并且寻找图片角点</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">void findCheese(string filename) &#123;</div><div class="line">	vector&lt;Point2f&gt; image_points_buf;  // 缓存每幅图像上检测到的角点</div><div class="line">	cout &lt;&lt; &quot;开始提取角点&quot;;</div><div class="line">	ifstream fin(filename);</div><div class="line"></div><div class="line">	while (getline(fin, filename))</div><div class="line">	&#123;</div><div class="line">		image_count++;</div><div class="line">		cout &lt;&lt; &quot;Solve image = &quot; &lt;&lt; image_count &lt;&lt; endl;</div><div class="line">		Mat imageInput = imread(filename);</div><div class="line">		if (image_count == 1)  //读入第一张图片时获取图像宽高信息,标定需要</div><div class="line">		&#123;</div><div class="line">			image_size.width = imageInput.cols;</div><div class="line">			image_size.height = imageInput.rows;</div><div class="line">			cout &lt;&lt; &quot;image_size.width = &quot; &lt;&lt; image_size.width &lt;&lt; endl;</div><div class="line">			cout &lt;&lt; &quot;image_size.height = &quot; &lt;&lt; image_size.height &lt;&lt; endl;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		/* 提取角点 */</div><div class="line">		if (0 == findChessboardCorners(imageInput, board_size, image_points_buf))</div><div class="line">		&#123;</div><div class="line">			cout &lt;&lt; &quot;can not find chessboard corners!\n&quot;; //找不到角点</div><div class="line">			exit(1);</div><div class="line">		&#125;</div><div class="line">		else</div><div class="line">		&#123;</div><div class="line">			Mat view_gray;</div><div class="line">			cvtColor(imageInput, view_gray, CV_RGB2GRAY);</div><div class="line">			/* 亚像素精确化 */</div><div class="line">			find4QuadCornerSubpix(view_gray, image_points_buf, Size(5, 5)); //对粗提取的角点进行精确化</div><div class="line">																			//cornerSubPix(view_gray,image_points_buf,Size(5,5),Size(-1,-1),TermCriteria(CV_TERMCRIT_EPS+CV_TERMCRIT_ITER,30,0.1));</div><div class="line">			image_points_seq.push_back(image_points_buf);  //保存亚像素角点</div><div class="line"></div><div class="line">			//drawChessboardCorners(view_gray, board_size, image_points_buf, false); //用于在图片中标记角点</div><div class="line">			//imshow(&quot;Camera Calibration&quot;, view_gray);//显示图片</div><div class="line">			//waitKey(500);//暂停0.5S		</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	cout &lt;&lt; &quot;角点提取完成！\n&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="进行标定，寻找内参数与畸变参数"><a href="#进行标定，寻找内参数与畸变参数" class="headerlink" title="进行标定，寻找内参数与畸变参数"></a>进行标定，寻找内参数与畸变参数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">void myCalibration(string filename) &#123;</div><div class="line"></div><div class="line">	cout &lt;&lt; &quot;开始标定………………&quot;;</div><div class="line">	/*棋盘三维信息*/</div><div class="line">	Size square_size = Size(10, 10);  /* 实际测量得到的标定板上每个棋盘格的大小 */</div><div class="line">	vector&lt;vector&lt;Point3f&gt;&gt; object_points; /* 保存标定板上角点的三维坐标 */</div><div class="line">	vector&lt;Mat&gt; tvecsMat;  /* 每幅图像的旋转向量 */</div><div class="line">	vector&lt;Mat&gt; rvecsMat; /* 每幅图像的平移向量 */</div><div class="line">	/* 初始化标定板上角点的三维坐标 */</div><div class="line">	int i, j, t;</div><div class="line">	for (t = 0; t&lt;image_count; t++)</div><div class="line">	&#123;</div><div class="line">		vector&lt;Point3f&gt; tempPointSet;</div><div class="line">		for (i = 0; i&lt;board_size.height; i++)</div><div class="line">		&#123;</div><div class="line">			for (j = 0; j&lt;board_size.width; j++)</div><div class="line">			&#123;</div><div class="line">				Point3f realPoint;</div><div class="line">				/* 假设标定板放在世界坐标系中z=0的平面上 */</div><div class="line">				realPoint.x = i*square_size.width;</div><div class="line">				realPoint.y = j*square_size.height;</div><div class="line">				realPoint.z = 0;</div><div class="line">				tempPointSet.push_back(realPoint);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		object_points.push_back(tempPointSet);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	/* 开始标定 */</div><div class="line">	calibrateCamera(object_points, image_points_seq, image_size, cameraMatrix, distCoeffs, rvecsMat, tvecsMat, 0);</div><div class="line">	cout &lt;&lt; &quot;标定完成！\n&quot;;</div><div class="line"></div><div class="line">	//保存标定结果  </div><div class="line">	ofstream fout(filename);  // 保存标定结果的文件</div><div class="line">	std::cout &lt;&lt; &quot;开始保存定标结果………………&quot; &lt;&lt; endl;</div><div class="line">	fout &lt;&lt; &quot;相机内参数矩阵：&quot; &lt;&lt; endl;</div><div class="line">	fout &lt;&lt; cameraMatrix &lt;&lt; endl &lt;&lt; endl;</div><div class="line">	fout &lt;&lt; &quot;畸变系数：\n&quot;;</div><div class="line">	fout &lt;&lt; distCoeffs &lt;&lt; endl &lt;&lt; endl &lt;&lt; endl;</div><div class="line"></div><div class="line">	std::cout &lt;&lt; &quot;完成保存&quot; &lt;&lt; endl;</div><div class="line">	fout &lt;&lt; endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="进行图像矫正"><a href="#进行图像矫正" class="headerlink" title="进行图像矫正"></a>进行图像矫正</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">void correctFile() &#123;</div><div class="line">	Mat mapx = Mat(image_size, CV_32FC1);</div><div class="line">	Mat mapy = Mat(image_size, CV_32FC1);</div><div class="line">	Mat R = Mat::eye(3, 3, CV_32F);</div><div class="line">	std::cout &lt;&lt; &quot;保存矫正图像&quot; &lt;&lt; endl;</div><div class="line">	string imageFileName;</div><div class="line">	std::stringstream StrStm;</div><div class="line">	for (int i = 0; i != image_count; i++)</div><div class="line">	&#123;</div><div class="line">		std::cout &lt;&lt; &quot;Save &quot; &lt;&lt; i + 1 &lt;&lt; &quot;...&quot; &lt;&lt; endl;</div><div class="line">		initUndistortRectifyMap(cameraMatrix, distCoeffs, R, cameraMatrix, image_size, CV_32FC1, mapx, mapy);</div><div class="line">		StrStm.clear();</div><div class="line">		imageFileName.clear();</div><div class="line">		string filePath = &quot;C:\\Users\\whatseven\\Desktop\\project\\C++\\Calibration\\Calibration\\image\\chess&quot;;</div><div class="line">		StrStm &lt;&lt; i + 1;</div><div class="line">		StrStm &gt;&gt; imageFileName;</div><div class="line">		filePath += imageFileName;</div><div class="line">		filePath += &quot;.bmp&quot;;</div><div class="line">		Mat imageSource = imread(filePath);</div><div class="line">		Mat newimage = imageSource.clone();</div><div class="line">		//另一种不需要转换矩阵的方式</div><div class="line">		//undistort(imageSource,newimage,cameraMatrix,distCoeffs);</div><div class="line">		remap(imageSource, newimage, mapx, mapy, INTER_LINEAR);</div><div class="line">		StrStm.clear();</div><div class="line">		filePath.clear();</div><div class="line">		StrStm &lt;&lt; i + 1;</div><div class="line">		StrStm &gt;&gt; imageFileName;</div><div class="line">		imageFileName += &quot;_d.jpg&quot;;</div><div class="line">		imwrite(imageFileName, newimage);</div><div class="line">	&#125;</div><div class="line">	std::cout &lt;&lt; &quot;保存结束&quot; &lt;&lt; endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="调用函数"><a href="#调用函数" class="headerlink" title="调用函数"></a>调用函数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">void main()</div><div class="line">&#123;</div><div class="line">	string inputFile = &quot;calibdata.txt&quot;;</div><div class="line">	string outputFile = &quot;caliberation_result.txt&quot;;</div><div class="line"></div><div class="line">	findCheese(inputFile);			//找到角点</div><div class="line"></div><div class="line">	myCalibration(outputFile);		//标定，找到参数矩阵及畸变系数</div><div class="line"></div><div class="line">	correctFile();					//储存矫正后图片</div><div class="line"></div><div class="line">	return;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="标定结果"><a href="#标定结果" class="headerlink" title="标定结果"></a>标定结果</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/c28b1b2342c202e556e4cc31b1a646fd.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p><strong><a href="https://github.com/whatseven/Calibration.git" target="_blank" rel="external">Github项目地址</a></strong></p>
+<h1 id="利用Matlab进行标定"><a href="#利用Matlab进行标定" class="headerlink" title="利用Matlab进行标定"></a>利用Matlab进行标定</h1><h2 id="CameraCalibrator工具"><a href="#CameraCalibrator工具" class="headerlink" title="CameraCalibrator工具"></a>CameraCalibrator工具</h2><ol>
+<li><p>在Matlab命令行里，输入<code>cameraCalibrator</code>打开标定程序</p>
+</li>
+<li><p>选择<code>Add images</code>将图片导入</p>
+</li>
+<li><p>单击<code>Calibration</code>即可开始标定，再点击<code>Export Camera Parameters</code>即可导出相机参数</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/32b1e24f203e5bbad6795546093b9db7.png" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;相机标定的原理&quot;&gt;&lt;a href=&quot;#相机标定的原理&quot; class=&quot;headerlink&quot; title=&quot;相机标定的原理&quot;&gt;&lt;/a&gt;相机标定的原理&lt;/h1&gt;&lt;h2 id=&quot;成像模型&quot;&gt;&lt;a href=&quot;#成像模型&quot; class=&quot;headerlink&quot; titl
+    
+    </summary>
+    
+    
+      <category term="Computer Vision" scheme="http://http://blog.llsevenr.cn/tags/Computer-Vision/"/>
+    
+  </entry>
+  
+  <entry>
     <title>基于python实现朴素贝叶斯算法</title>
     <link href="http://http://blog.llsevenr.cn/2017/08/30/%E5%9F%BA%E4%BA%8Epython%E5%AE%9E%E7%8E%B0%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95/"/>
     <id>http://http://blog.llsevenr.cn/2017/08/30/基于python实现朴素贝叶斯算法/</id>
     <published>2017-08-30T01:35:25.000Z</published>
-    <updated>2017-08-30T07:10:07.629Z</updated>
+    <updated>2017-09-01T14:45:11.944Z</updated>
     
     <content type="html"><![CDATA[<h1 id="朴素贝叶斯算法总结"><a href="#朴素贝叶斯算法总结" class="headerlink" title="朴素贝叶斯算法总结"></a>朴素贝叶斯算法总结</h1><p>(有关朴素贝叶斯算法的原理可可参考<a href="http://www.cnblogs.com/leoo2sk/archive/2010/09/17/naive-bayesian-classifier.html" target="_blank" rel="external">算法杂货铺——分类算法之朴素贝叶斯分类(Naive Bayesian classification)</a>)</p>
 <p>下面对朴素贝叶斯算法进行粗略的总结，并可以根据这个总结搭建朴素贝叶斯算法的框架</p>
@@ -60,6 +287,7 @@
 <p><strong>将次数除以类别出现的次数即为相应的先验概率（P（ai=j|C=k））</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># 对于储存的每一个值除以类别的概率即为P（ai=j|C=k）</div><div class="line">    for key in unsurVec.keys():</div><div class="line">        targetStr = key[key.find(&apos;|&apos;) + 1:]</div><div class="line">        unsurVec[key]/=(len(cateVec) * (1 - surRate))</div><div class="line"></div><div class="line">    for key in surVec.keys():</div><div class="line">        targetStr = key[key.find(&apos;|&apos;) + 1:]</div><div class="line">        surVec[key]/=(len(cateVec) * surRate)</div><div class="line">    return unsurVec,surVec,surRate</div></pre></td></tr></table></figure></p>
 <h2 id="识别部分"><a href="#识别部分" class="headerlink" title="识别部分"></a>识别部分</h2><p>识别部分将输入的向量构造成形如字典存储的”0=2”的形式，代表第0个属性值为2（处于第二个划分），再到不同类别的概率字典中取出值乘以类别的概率，即（P（ai=j|C=k）*（P（C=k）））为贝叶斯公式的分子，因为分母相同，取分子最大的类别即为结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">def classify(feature,unsurVec,surVec,survivedRate):</div><div class="line">    # 初始化结果概率</div><div class="line">    survivedPos=1</div><div class="line">    unsurvivedPos=1</div><div class="line">    # 对于每一个属性，计算P(ai=j|C=k)，并将结果乘入对应类别的结果概率</div><div class="line">    for i in range(len(feature)):</div><div class="line">        tempStr=str(i)+&apos;=&apos;+feature[i]</div><div class="line">        survivedPos*=surVec[tempStr]</div><div class="line">        unsurvivedPos*=unsurVec[tempStr]</div><div class="line">    # 计算P(ai=j|C=k)*P（C=k）</div><div class="line">    survivedPos*=survivedRate</div><div class="line">    unsurvivedPos*=(1-survivedRate)</div><div class="line">    # 返回概率大的类别</div><div class="line">    return 1 if survivedPos&gt;unsurvivedPos else 0</div></pre></td></tr></table></figure></p>
 <h2 id="主程序调用"><a href="#主程序调用" class="headerlink" title="主程序调用"></a>主程序调用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">data,survived=preProcess()</div><div class="line">unsurVec,surVec,surRate=train(data,survived)</div><div class="line">k=0 # 准确的个数</div><div class="line">total=92 # 测试个数</div><div class="line"></div><div class="line"># 对输入数据预处理，得到与dataMatrix相同的数据格式</div><div class="line">reader=csv.reader(open(&quot;test.csv&quot;))</div><div class="line">for id, sur, pc, name, sex, age, sib, par, tic, fare, car, emb in reader:</div><div class="line">    if (id == &apos;PassengerId&apos;):</div><div class="line">        continue</div><div class="line"></div><div class="line">    temp = [pc, sex, age, sib, par]</div><div class="line">    for i in range(len(temp)):</div><div class="line">        if (len(temp[i]) == 0):</div><div class="line">            temp[i] = 1</div><div class="line"></div><div class="line">    age = float(temp[2])</div><div class="line">    sib = int(temp[3])</div><div class="line">    par = int(temp[4])</div><div class="line"></div><div class="line">    ageTemp = &apos;0&apos;</div><div class="line">    if 0 &lt; age and age &lt; 10:</div><div class="line">        ageTemp = &apos;1&apos;</div><div class="line">    elif 10 &lt;= age &lt; 20:</div><div class="line">        ageTemp = &apos;2&apos;</div><div class="line">    elif 20 &lt;= age &lt; 30:</div><div class="line">        ageTemp = &apos;3&apos;</div><div class="line">    elif 30 &lt;= age &lt; 40:</div><div class="line">        ageTemp = &apos;4&apos;</div><div class="line">    elif age &gt;= 40:</div><div class="line">        ageTemp = &apos;5&apos;</div><div class="line"></div><div class="line">    sibspTemp = &apos;0&apos;</div><div class="line">    if sib == 1:</div><div class="line">        sibspTemp = &apos;1&apos;</div><div class="line">    elif sib == 2:</div><div class="line">        sibspTemp = &apos;2&apos;</div><div class="line">    elif sib &gt; 2:</div><div class="line">        sibspTemp = &apos;3&apos;</div><div class="line"></div><div class="line">    parchTemp = &apos;0&apos;</div><div class="line">    if par == 1:</div><div class="line">        parchTemp = &apos;1&apos;</div><div class="line">    elif par == 2:</div><div class="line">        parchTemp = &apos;2&apos;</div><div class="line">    elif par &gt; 2:</div><div class="line">        parchTemp = &apos;3&apos;</div><div class="line"></div><div class="line">    temp = [pc, &apos;1&apos; if sex == &apos;male&apos; else &apos;0&apos;, ageTemp, sibspTemp, parchTemp]</div><div class="line">    # 判断识别结果</div><div class="line">    if(classify(temp,unsurVec,surVec,surRate)==int(sur)):</div><div class="line">        k+=1</div><div class="line"></div><div class="line"># 输出识别率        </div><div class="line">print(k/total)</div></pre></td></tr></table></figure>
+<p><strong><a href="https://github.com/whatseven/nbm-base.git" target="_blank" rel="external">Github项目地址</a></strong></p>
 <h1 id="Todo"><a href="#Todo" class="headerlink" title="Todo"></a>Todo</h1><p>对于先验概率的储存还是不太满意，应该会有更好的数据结构用来存储对于每一个类别，每一个属性的每一个划分的值</p>
 <p>#参考资料：</p>
 <blockquote>
@@ -79,6 +307,8 @@
       <category term="Machine Lerning" scheme="http://http://blog.llsevenr.cn/tags/Machine-Lerning/"/>
     
       <category term="Python" scheme="http://http://blog.llsevenr.cn/tags/Python/"/>
+    
+      <category term="Computer Vision" scheme="http://http://blog.llsevenr.cn/tags/Computer-Vision/"/>
     
   </entry>
   
