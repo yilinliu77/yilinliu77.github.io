@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://http://blog.llsevenr.cn/"/>
-  <updated>2017-09-26T16:01:24.427Z</updated>
+  <updated>2017-09-26T16:04:45.900Z</updated>
   <id>http://http://blog.llsevenr.cn/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
+    <title>在线编程环境CHE的配置</title>
     <link href="http://http://blog.llsevenr.cn/2017/09/27/che%E7%9A%84%E9%85%8D%E7%BD%AE/"/>
     <id>http://http://blog.llsevenr.cn/2017/09/27/che的配置/</id>
-    <published>2017-09-26T16:01:24.391Z</published>
-    <updated>2017-09-26T16:01:24.427Z</updated>
+    <published>2017-09-26T16:00:13.000Z</published>
+    <updated>2017-09-26T16:04:45.900Z</updated>
     
     <content type="html"><![CDATA[<h1 id="CHE的配置"><a href="#CHE的配置" class="headerlink" title="CHE的配置"></a>CHE的配置</h1><p><strong>需要工具</strong></p>
 <ul>
@@ -375,11 +375,11 @@
       <category term="Machine Learning" scheme="http://http://blog.llsevenr.cn/categories/Machine-Learning/"/>
     
     
-      <category term="Computer Vision" scheme="http://http://blog.llsevenr.cn/tags/Computer-Vision/"/>
-    
       <category term="Machine Lerning" scheme="http://http://blog.llsevenr.cn/tags/Machine-Lerning/"/>
     
       <category term="Python" scheme="http://http://blog.llsevenr.cn/tags/Python/"/>
+    
+      <category term="Computer Vision" scheme="http://http://blog.llsevenr.cn/tags/Computer-Vision/"/>
     
   </entry>
   
