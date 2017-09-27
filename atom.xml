@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://http://blog.llsevenr.cn/"/>
-  <updated>2017-09-27T04:15:21.305Z</updated>
+  <updated>2017-09-27T04:17:08.375Z</updated>
   <id>http://http://blog.llsevenr.cn/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://http://blog.llsevenr.cn/2017/09/27/%E5%9C%A8%E7%BA%BF%E7%BC%96%E7%A8%8B%E7%8E%AF%E5%A2%83CHE%E7%9A%84%E9%85%8D%E7%BD%AE/"/>
     <id>http://http://blog.llsevenr.cn/2017/09/27/在线编程环境CHE的配置/</id>
     <published>2017-09-27T04:00:15.000Z</published>
-    <updated>2017-09-27T04:15:21.305Z</updated>
+    <updated>2017-09-27T04:17:08.375Z</updated>
     
     <content type="html"><![CDATA[<p><code>Eclipse Che</code>是一个动态配置的按需IDE(集成开发环境)，它运行在云端提供可替代JetBrains IntelliJ Java IDE 的开源环境，并且允许在任何机器上打开浏览器写代码。</p>
 <p>为了能让同学们独立地在自己的服务器上使用这个开发环境，我们将<code>Che</code>的基本环境已经在服务器上搭建好，现在还需要同学们完成最后一步将自己的服务器的公网IP输入到配置文件里面去</p>
