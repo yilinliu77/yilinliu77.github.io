@@ -26,13 +26,19 @@
 <meta property="og:url" content="http://http://blog.llsevenr.cn/2017/09/27/在线编程环境CHE的配置/index.html">
 <meta property="og:site_name" content="whatseven的博客">
 <meta property="og:description" content="Eclipse Che是一个动态配置的按需IDE(集成开发环境)，它运行在云端提供可替代JetBrains IntelliJ Java IDE 的开源环境，并且允许在任何机器上打开浏览器写代码。 为了能让同学们独立地在自己的服务器上使用这个开发环境，我们将Che的基本环境已经在服务器上搭建好，现在还需要同学们完成最后一步将自己的服务器的公网IP输入到配置文件里面去 目标 完成在线开发环境的搭建 熟">
+<meta property="og:image" content="http://owzhs7l26.bkt.clouddn.com/17-9-28/95709251.jpg">
+<meta property="og:image" content="http://owzhs7l26.bkt.clouddn.com/17-9-28/80146896.jpg">
+<meta property="og:image" content="http://otbwgn2nv.bkt.clouddn.com/7645304aa94b0c2240f4ee8cb6cc7d93.png">
+<meta property="og:image" content="http://otbwgn2nv.bkt.clouddn.com/7f48906fa73b0e9b7cc316e4f9531fee.png">
+<meta property="og:image" content="http://owzhs7l26.bkt.clouddn.com/17-9-28/87628379.jpg">
+<meta property="og:image" content="http://otbwgn2nv.bkt.clouddn.com/7645304aa94b0c2240f4ee8cb6cc7d93.png">
 <meta property="og:image" content="http://otbwgn2nv.bkt.clouddn.com/5bfc64ee548e669975726924884905fc.png">
 <meta property="og:image" content="http://otbwgn2nv.bkt.clouddn.com/b8fd38c5f6f1ead157575385a7b1a7e4.png">
-<meta property="og:updated_time" content="2017-09-28T08:39:44.630Z">
+<meta property="og:updated_time" content="2017-09-28T10:15:39.209Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在线编程环境CHE的配置">
 <meta name="twitter:description" content="Eclipse Che是一个动态配置的按需IDE(集成开发环境)，它运行在云端提供可替代JetBrains IntelliJ Java IDE 的开源环境，并且允许在任何机器上打开浏览器写代码。 为了能让同学们独立地在自己的服务器上使用这个开发环境，我们将Che的基本环境已经在服务器上搭建好，现在还需要同学们完成最后一步将自己的服务器的公网IP输入到配置文件里面去 目标 完成在线开发环境的搭建 熟">
-<meta name="twitter:image" content="http://otbwgn2nv.bkt.clouddn.com/5bfc64ee548e669975726924884905fc.png">
+<meta name="twitter:image" content="http://owzhs7l26.bkt.clouddn.com/17-9-28/95709251.jpg">
     
         <link rel="alternate" type="application/atom+xml" title="whatseven的博客" href="/atom.xml">
     
@@ -158,7 +164,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#目标"><span class="post-toc-number">1.</span> <span class="post-toc-text">目标</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#修改CHE配置"><span class="post-toc-number">2.</span> <span class="post-toc-text">修改CHE配置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#修改配置文件"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">修改配置文件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#添加workspace"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">添加workspace</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#目标"><span class="post-toc-number">1.</span> <span class="post-toc-text">目标</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#步骤"><span class="post-toc-number">2.</span> <span class="post-toc-text">步骤</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#京东云-创建实例教程"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">京东云 创建实例教程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#修改CHE配置"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">修改CHE配置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#需要工具"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">需要工具</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#修改配置文件"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">修改配置文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#添加workspace"><span class="post-toc-number">2.2.3.</span> <span class="post-toc-text">添加workspace</span></a></li></ol></li></ol></li></ol>
         </nav>
     </aside>
     
@@ -185,16 +191,55 @@
 <p>为了能让同学们独立地在自己的服务器上使用这个开发环境，我们将<code>Che</code>的基本环境已经在服务器上搭建好，现在还需要同学们完成最后一步将自己的服务器的公网IP输入到配置文件里面去</p>
 <h1 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h1><ul>
 <li>完成在线开发环境的搭建</li>
-<li>熟悉常见的服务器连接及文件上传操作</li>
+<li>熟悉常见的服务器连接操作</li>
 </ul>
-<h1 id="修改CHE配置"><a href="#修改CHE配置" class="headerlink" title="修改CHE配置"></a>修改CHE配置</h1><p><strong>需要工具</strong></p>
-<ul>
+<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><h2 id="京东云-创建实例教程"><a href="#京东云-创建实例教程" class="headerlink" title="京东云 创建实例教程"></a>京东云 创建实例教程</h2><blockquote>
+<p>by 熊鑫</p>
+</blockquote>
+<ol>
+<li><p>登录京东云的<a href="http://www.jcloud.com/" target="_blank" rel="external">官网</a></p>
+</li>
+<li><p>登录账号</p>
+</li>
+<li><p>点击创建云主机的链接，创建主机</p>
+<p>选择官方镜像 ubuntu 16.04 64位<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://owzhs7l26.bkt.clouddn.com/17-9-28/95709251.jpg" alt="photo" title="">
+                </div>
+                <div class="image-caption">photo</div>
+            </figure></p>
+<p>VPC选择默认选项就行，其他都不用设置</p>
+<p><img src="http://owzhs7l26.bkt.clouddn.com/17-9-28/80146896.jpg" alt="pic"></p>
+<p>立即购买就行了</p>
+</li>
+<li><p>接下来进入控制台界面，登云主机创建好以后，先停止云主机</p>
+<p> <img src="http://otbwgn2nv.bkt.clouddn.com/7645304aa94b0c2240f4ee8cb6cc7d93.png" alt="tws-che"></p>
+<p> <img src="http://otbwgn2nv.bkt.clouddn.com/7f48906fa73b0e9b7cc316e4f9531fee.png" alt="tws-che"></p>
+<p>停止以后，在更多菜单中选择重置系统，</p>
+<p><img src="http://owzhs7l26.bkt.clouddn.com/17-9-28/87628379.jpg" alt=""></p>
+<p>点击更换镜像，镜像类型为共享，选择共享镜像为tws-eclipse-che-v1 Ubuntu 16.04，如上图所示。</p>
+<p>密码自己设置自己的密码，记住就行，然后点击确定。然后会提示是否重置，确定就行。</p>
+<p>然后就是等待系统重置完成。</p>
+<p>系统重置完成之后是停止状态，再启动就行了。</p>
+</li>
+<li><p>云主机实例创建完成。</p>
+</li>
+<li><p>查看自己的公网IP地址</p>
+<p> <img src="http://otbwgn2nv.bkt.clouddn.com/7645304aa94b0c2240f4ee8cb6cc7d93.png" alt="tws-che"></p>
+</li>
+</ol>
+<h2 id="修改CHE配置"><a href="#修改CHE配置" class="headerlink" title="修改CHE配置"></a>修改CHE配置</h2><blockquote>
+<p>by 刘奕林</p>
+</blockquote>
+<h3 id="需要工具"><a href="#需要工具" class="headerlink" title="需要工具"></a>需要工具</h3><ul>
 <li><p><strong>Xshell</strong>（一款远程连接服务器进行管理的软件）·<a href="http://jingyan.baidu.com/article/295430f13fb4db0c7f005065.html" target="_blank" rel="external">教程</a></p>
 <p>  也可以用Putty</p>
 </li>
+<li><p><strong>自己的公网IP</strong></p>
+</li>
 </ul>
-<p><strong>自己的公网IP</strong></p>
-<h2 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h2><p>首先需要连接到自己的服务器修改<code>che.env</code>文件，将里面的IP地址设为自己服务器的公网IP地址，按照如下步骤</p>
+<h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><p>首先需要连接到自己的服务器修改<code>che.env</code>文件，将里面的IP地址设为自己服务器的公网IP地址，按照如下步骤</p>
 <ul>
 <li><p>打开<code>Xshell</code>，选择<code>新建站点</code>，输入服务器的公网IP并连接，并输入账号密码，默认进入<code>~</code>目录</p>
 <p>  <img src="http://otbwgn2nv.bkt.clouddn.com/5bfc64ee548e669975726924884905fc.png" alt="tws-che教程"></p>
@@ -212,7 +257,7 @@
 <li><p>静静的等待<code>che</code>重启成功，大概五分钟左右</p>
 </li>
 </ul>
-<h2 id="添加workspace"><a href="#添加workspace" class="headerlink" title="添加workspace"></a>添加workspace</h2><p>第二步我们需要添加自己的workspace，打开浏览器，输入自己的公网<code>IP地址:8080</code>访问<code>che</code>的管理界面,例如<code>111.222.333.444:8080</code></p>
+<h3 id="添加workspace"><a href="#添加workspace" class="headerlink" title="添加workspace"></a>添加workspace</h3><p>第二步我们需要添加自己的workspace，打开浏览器，输入自己的公网<code>IP地址:8080</code>访问<code>che</code>的管理界面,例如<code>111.222.333.444:8080</code></p>
 <ul>
 <li><p>在左边的菜单栏选择<code>WorkSpaces</code></p>
 </li>
@@ -239,7 +284,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2017-09-28T08:39:44.630Z" itemprop="dateUpdated">2017-09-28 16:39:44</time>
+    最后更新时间：<time datetime="2017-09-28T10:15:39.209Z" itemprop="dateUpdated">2017-09-28 18:15:39</time>
 </span><br>
 
 
