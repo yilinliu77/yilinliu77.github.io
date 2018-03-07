@@ -95,3 +95,7 @@ deploy:
   type: git
   repo: git@github.com:whatseven/whatseven.github.io.git
   branch: master
+  # - type: git
+  #   repo: git@github.com:whatseven/whatseven.github.io.git,master
+  # - type: git
+  #   repo: git@gitlab.com:whatseven/whatseven.gitlab.io.git,master
