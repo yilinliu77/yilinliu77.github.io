@@ -6,6 +6,8 @@ pages:
     - node_modules/
 
   script:
+  - git config --global user.email "1787609016@qq.com"
+  - git config --global user.name "whatseven"
   - npm install hexo-cli -g
   - npm install
   - hexo deploy
