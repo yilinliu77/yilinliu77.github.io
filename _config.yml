@@ -12,7 +12,7 @@ timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://http://blog.llsevenr.cn
+url: blog.llsevenr.cn
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -89,13 +89,26 @@ feed:
   path: atom.xml
   limit: 0
 
+# 自动生成sitemap
+sitemap:
+  path: sitemap.xml
+baidusitemap:
+  path: baidusitemap.xml
+
+baidu_url_submit:
+  count: 3 # 提交最新的一个链接
+  host: blog.llsevenr.cn # 在百度站长平台中注册的域名
+  token: DanqH0nfJLhDDIhp # 请注意这是您的秘钥， 所以请不要把博客源代码发布在公众仓库里!
+  path: baidu_urls.txt # 文本文档的地址， 新链接会保存在此文本文档里
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: git
-  repo: git@github.com:whatseven/whatseven.github.io.git
-  branch: master
-  # - type: git
-  #   repo: git@github.com:whatseven/whatseven.github.io.git,master
-  # - type: git
-  #   repo: git@gitlab.com:whatseven/whatseven.gitlab.io.git,master
+  # type: git
+  # repo: git@github.com:whatseven/whatseven.github.io.git
+  # branch: master
+  - type: git
+    repo: git@github.com:whatseven/whatseven.github.io.git,master
+  - type: git
+    repo: git@111.231.116.139:/home/git/blog/whatseven.github.io,master
+  - type: baidu_url_submitter
