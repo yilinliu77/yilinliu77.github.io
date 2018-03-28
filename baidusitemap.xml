@@ -4,6 +4,21 @@
 
     
   <url>
+    <loc>blog.llsevenr.cn/2018/03/22/Coherent-Occlusion-Culling-CHC-%E7%AE%97%E6%B3%95%E7%9A%84%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0/</loc>
+    <lastmod>2018-03-28T13:52:07.687Z</lastmod>
+    <data>
+        <display>
+        <title>Coherent Occlusion Culling(CHC) 算法的原理与实现</title>
+        <pubTime>2018-03-22T13:04:06.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>blog.llsevenr.cn/2017/08/30/%E5%9F%BA%E4%BA%8Epython%E5%AE%9E%E7%8E%B0%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2017-09-01T14:45:11.945Z</lastmod>
     <data>
@@ -11,11 +26,11 @@
         <title>基于python实现朴素贝叶斯算法</title>
         <pubTime>2017-08-30T01:35:25.000Z</pubTime>
         
-        <tag>Computer Vision</tag>
-         
         <tag>Machine Lerning</tag>
          
         <tag>Python</tag>
+         
+        <tag>Computer Vision</tag>
          
          
            

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Coherent Occlusion Culling(CHC) 算法的原理与实现 | whatseven的博客 | blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="CHC算法是Jiˇrí Bittner在2004年提出的一种遮挡剔除的算法，其中主要运用到了渲染的（Temporal coherence）时间相干性以及（Spatial coherence）空间相干性，同时运用BVH（Bounding Volume Hirachical）管理场景并且通过基于硬件的遮挡查询对遮挡物进行剔除，提高渲染速度。  算法背景Hardware Occlusion Culli">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Coherent Occlusion Culling(CHC) 算法的原理与实现">
+<meta property="og:url" content="blog.llsevenr.cn/2018/03/22/Coherent-Occlusion-Culling-CHC-算法的原理与实现/index.html">
+<meta property="og:site_name" content="whatseven的博客">
+<meta property="og:description" content="CHC算法是Jiˇrí Bittner在2004年提出的一种遮挡剔除的算法，其中主要运用到了渲染的（Temporal coherence）时间相干性以及（Spatial coherence）空间相干性，同时运用BVH（Bounding Volume Hirachical）管理场景并且通过基于硬件的遮挡查询对遮挡物进行剔除，提高渲染速度。  算法背景Hardware Occlusion Culli">
+<meta property="og:image" content="https://en.wikipedia.org/wiki/Bounding_volume_hierarchy)">
+<meta property="og:image" content="http://otbwgn2nv.bkt.clouddn.com/CHC-1.png">
+<meta property="og:updated_time" content="2018-03-28T13:52:07.687Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Coherent Occlusion Culling(CHC) 算法的原理与实现">
+<meta name="twitter:description" content="CHC算法是Jiˇrí Bittner在2004年提出的一种遮挡剔除的算法，其中主要运用到了渲染的（Temporal coherence）时间相干性以及（Spatial coherence）空间相干性，同时运用BVH（Bounding Volume Hirachical）管理场景并且通过基于硬件的遮挡查询对遮挡物进行剔除，提高渲染速度。  算法背景Hardware Occlusion Culli">
+<meta name="twitter:image" content="https://en.wikipedia.org/wiki/Bounding_volume_hierarchy)">
+    
+        <link rel="alternate" type="application/atom+xml" title="whatseven的博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="baidu-site-verification" content="awIK7549vT" />
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="http://otbwgn2nv.bkt.clouddn.com/head.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">whatseven</h5>
+          <a href="mailto:1787609016@qq.com" title="1787609016@qq.com" class="mail">1787609016@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/whatseven" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Coherent Occlusion Culling(CHC) 算法的原理与实现</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Coherent Occlusion Culling(CHC) 算法的原理与实现</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-22T13:04:06.000Z" itemprop="datePublished" class="page-time">
+  2018-03-22
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#算法背景"><span class="post-toc-number">1.</span> <span class="post-toc-text">算法背景</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Hardware-Occlusion-Culling"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Hardware Occlusion Culling</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#优点"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">优点</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#存在问题"><span class="post-toc-number">2.</span> <span class="post-toc-text">存在问题</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Coherent-Occlusion-Culling（CHC）"><span class="post-toc-number">3.</span> <span class="post-toc-text">Coherent Occlusion Culling（CHC）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#目标"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">目标</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#算法核心"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">算法核心</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#算法介绍"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">算法介绍</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Spatial-Coherence"><span class="post-toc-number">3.3.1.</span> <span class="post-toc-text">Spatial Coherence</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Time-Coherence"><span class="post-toc-number">3.3.2.</span> <span class="post-toc-text">Time Coherence</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#算法实现"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">算法实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#定义变量"><span class="post-toc-number">3.4.1.</span> <span class="post-toc-text">定义变量</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#循环主体"><span class="post-toc-number">3.4.2.</span> <span class="post-toc-text">循环主体</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#PART-1-Query-and-process-finished-queries"><span class="post-toc-number">3.4.2.1.</span> <span class="post-toc-text">PART 1:Query and process finished queries</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#PART-3-Traversal"><span class="post-toc-number">3.4.2.2.</span> <span class="post-toc-text">PART 3:Traversal</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Function-issueOcculusionQuery"><span class="post-toc-number">3.4.2.3.</span> <span class="post-toc-text">Function:issueOcculusionQuery</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Function-drawBound"><span class="post-toc-number">3.4.2.4.</span> <span class="post-toc-text">Function:drawBound</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Function-traversalNode"><span class="post-toc-number">3.4.2.5.</span> <span class="post-toc-text">Function:traversalNode</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Function-pullUpVisibility"><span class="post-toc-number">3.4.2.6.</span> <span class="post-toc-text">Function:pullUpVisibility</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Function-getOcculusionResult"><span class="post-toc-number">3.4.2.7.</span> <span class="post-toc-text">Function:getOcculusionResult</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Function-resultAvailable"><span class="post-toc-number">3.4.2.8.</span> <span class="post-toc-text">Function:resultAvailable</span></a></li></ol></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#项目地址"><span class="post-toc-number">4.</span> <span class="post-toc-text">项目地址</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-Coherent-Occlusion-Culling-CHC-算法的原理与实现"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Coherent Occlusion Culling(CHC) 算法的原理与实现</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-22 21:04:06" datetime="2018-03-22T13:04:06.000Z"  itemprop="datePublished">2018-03-22</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>CHC算法是Jiˇrí Bittner在2004年提出的一种遮挡剔除的算法，其中主要运用到了渲染的（Temporal coherence）时间相干性以及（Spatial coherence）空间相干性，同时运用BVH（Bounding Volume Hirachical）管理场景并且通过基于硬件的遮挡查询对遮挡物进行剔除，提高渲染速度。</p>
+</blockquote>
+<h1 id="算法背景"><a href="#算法背景" class="headerlink" title="算法背景"></a>算法背景</h1><h2 id="Hardware-Occlusion-Culling"><a href="#Hardware-Occlusion-Culling" class="headerlink" title="Hardware Occlusion Culling"></a>Hardware Occlusion Culling</h2><p>CHC算法主要建立在基于硬件的遮挡查询（Hardware Occlusion Culling）的基础上。Hardware Occlusion Culling基于一个十分简单的思想，在判断物体是否被遮挡时，将物体的深度值传递给GPU，GPU将自己现存的最低的深度值与物体的深度值进行对比，并返回查询结果（可见像素点个数）。</p>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ul>
+<li>API简单易用，不需要额外管理信息，能迅速集成进现有系统</li>
+<li>基于GPU进行判断，效率高，充分挖掘GPU性能</li>
+</ul>
+<h1 id="存在问题"><a href="#存在问题" class="headerlink" title="存在问题"></a>存在问题</h1><ul>
+<li>基于GPU的判断效率高，但涉及数据传输，在大规模场景下会造成CPU一直等待GPU查询结果返回造成GPU性能饥饿的情况</li>
+<li>虽然基于GPU判断效率高，不过在复杂场景下仍有大量渲染目标需要被测试，仍有提升空间</li>
+</ul>
+<h1 id="Coherent-Occlusion-Culling（CHC）"><a href="#Coherent-Occlusion-Culling（CHC）" class="headerlink" title="Coherent Occlusion Culling（CHC）"></a>Coherent Occlusion Culling（CHC）</h1><h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><ul>
+<li>减少进行遮挡查询的次数</li>
+<li>避免CPU出现瓶颈而GPU饥饿的情况</li>
+</ul>
+<h2 id="算法核心"><a href="#算法核心" class="headerlink" title="算法核心"></a>算法核心</h2><ul>
+<li>利用BVH（Bounding Volume Hirachical）管理场景，并利用<strong>Spatial Coherence</strong>（空间相关性）减少每一帧需要进行遮挡查询的次数。</li>
+<li>重用上一帧的查询结果，利用<strong>Time Coherence</strong>（时间相关性）进一步减少查询次数</li>
+<li>维护一个查询队列，延迟进行查询的时间，并利用渲染部分场景的时间来填充CPU等待GPU查询结果返回的时间，减少GPU的饥饿。</li>
+</ul>
+<h2 id="算法介绍"><a href="#算法介绍" class="headerlink" title="算法介绍"></a>算法介绍</h2><h3 id="Spatial-Coherence"><a href="#Spatial-Coherence" class="headerlink" title="Spatial Coherence"></a>Spatial Coherence</h3><p>在实际的渲染过程中，一个渲染场景通常会有大量物体，如果将他们都渲染出来会对GPU造成极大的性能负担，所以需要对看不见的物体从渲染队列中剔除。例如View Frustum Culling算法：只渲染在视角范围内的物体。而对于一个复杂场景来说，经过View Frustum裁剪过后的物体对于渲染管线仍有很大压力。</p>
+<p>而对于CHC算法的基础Hardware Occlusion Culling算法来说，对每一个物体都进行一次查询仍然是难以负担的任务。为了减少进行查询的次数，CHC算法的作者采用了一种层次化管理场景(BVH)的方法。将场景中的物体基于空间信息利用树状结构进行管理，相邻的物体存在于叶节点中。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://en.wikipedia.org/wiki/Bounding_volume_hierarchy)" alt="Bounding Volume Hirachical](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Example_of_bounding_volume_hierarchy.svg/750px-Example_of_bounding_volume_hierarchy.svg.png)(图片来源[Wikipedia" title="">
+                </div>
+                <div class="image-caption">Bounding Volume Hirachical](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Example_of_bounding_volume_hierarchy.svg/750px-Example_of_bounding_volume_hierarchy.svg.png)(图片来源[Wikipedia</div>
+            </figure>
+<p>如图所示，场景中一共有6个物体，而树状结构一共有4个内部节点，每个物体都被它的父节点包围，每个内部节点也被它的父节点包围。</p>
+<p>算法流程如下：在渲染开始时会从根节点依次往下遍历，并利用Hardware Occlusion Culling的方法检测节点包围盒对于当前场景是否可见，如果可见则遍历子节点直至叶节点。如不可见则证明该包围盒下所有节点都不可见，则跳过该节点继续遍历。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://otbwgn2nv.bkt.clouddn.com/CHC-1.png" alt="CHC-1" title="">
+                </div>
+                <div class="image-caption">CHC-1</div>
+            </figure>
+<p>如上图，从根节点A开始遍历，发现右下角部分可视，则遍历子节点B与C。对于B节点的可见性测试失败，则跳过B节点的所有子节点，开始遍历C节点，直至遍历到叶节点开始渲染。</p>
+<p>从上面例子中可以见到，通过这样一个场景管理的方法能够很有效的减少对于物体级别的操作次数。</p>
+<blockquote>
+<p><strong>Tips</strong></p>
+<p>在实际的遮挡物检测中，必须注意到物体渲染先后次数的问题。Hardware Occlusion Culling是将待查询物体的深度与屏幕缓存中现有物体深度进行比较，考虑物体A被物体B挡在后面，完全不可见。但遍历树时首先遍历到物体A，这是物体B还没有被渲染，那么物体A的可见性测试将是True。所以使用BVH结合Occlusion Culling是必须考虑<strong>以从前往后</strong>的方式遍历树结构。</p>
+<p>在《Phisical Based Rendering》P297页介绍了一种成本很低的从前往后遍历的方法。具体实现见下方</p>
+</blockquote>
+<h3 id="Time-Coherence"><a href="#Time-Coherence" class="headerlink" title="Time Coherence"></a>Time Coherence</h3><p>即使利用了BVH管理场景，场景中仍具有大量待查询的物体。CHC算法的作者继续采用了一种假设的方法去消除一部分查询。</p>
+<p>CHC算法将树内部的节点分为<strong>Open Node</strong>与<strong>Terminal Node</strong>（下文以O与T表示）。O是指上一帧可见的非叶节点。除此之外都是T（也就是上一帧不可见的节点或者是所有叶节点）。实际代码中是这样判断的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//Is visible in last frame?</div><div class="line">bool wasVisible = curNode-&gt;visible &amp;&amp; (curNode-&gt;lastVisited == frameID - 1);</div><div class="line">//Is leaf node?</div><div class="line">bool opened = wasVisible &amp;&amp; !curNode-&gt;isLeaf;</div></pre></td></tr></table></figure>
+<p>在渲染的第一帧初始化两类节点的值，从第二帧的遍历开始，如果遇到O，则假设它这一帧能够被看到，初始化查询加入查询队列，但不等待查询结果返回就直接发出渲染命令，同时将可见性设为false。同时在每一次遍历新节点是查看队列中的查询结果，如果未返回则继续遍历，如果返回则处理查询结果并设置相应的可见性。</p>
+<p>如果遇到T，初始化查询，并且阻塞到查询结果返回。</p>
+<p>CHC算法的秘诀：</p>
+<ol>
+<li><p><strong>遍历时跳过所有O的可见度测试并默认通过</strong>，<strong>同时将其可见属性设为false</strong>，<strong>根据它的子叶节点的可见度测试结果重置它的可见属性</strong>。这种方法的作用是显而易见的，它有效的减少了执行可见度测试的次数，而他带来的影响：</p>
+<blockquote>
+<p><strong>假设上一帧可见的物体这一帧也可见</strong>：对于物体（叶节点）来说，在初始化查询后不等待其可见还是不可见的结果就立即发出渲染命令。这个假设第一不会影响到场景的正确性，因为所有的物体都会执行深度测试再次被裁剪。第二，初始化查询时将可见性设为false，这样在处理查询结果时也根据查询结果对这个节点<strong>以及其父节点</strong>赋予O或是T的属性从而影响到下一帧，也就是他的误差率是±1帧。</p>
+</blockquote>
+</li>
+<li><p>让CPU执行树的遍历与GPU执行可见性测试交错执行，这样能够有效的消除CPU的性能瓶颈以及GPU的饥饿。</p>
+</li>
+</ol>
+<p>CHC算法的流程图：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">while(true)&#123;</div><div class="line">    //PART 1:Query and process finished queries</div><div class="line">    while (!queryQueue.empty()|| doneTravel == true) &#123;</div><div class="line">        if (!queryQueue.empty()&amp;&amp; resultAvailable(queryQueue.front())) &#123;</div><div class="line">        //Previous invisible is ready</div><div class="line">        //······</div><div class="line">    &#125;</div><div class="line">    else if (!queryQueueForNextFrame.empty()&amp;&amp; resultAvailable(queryQueueForNextFrame.front())) &#123;</div><div class="line">		//previous visible is ready</div><div class="line">        //······</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    if (queryQueue.empty() &amp;&amp; queryQueueForNextFrame.empty()) break;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">    //PART 2:Check if the algorithm is done</div><div class="line">    if (queryQueue.empty() &amp;&amp; queryQueueForNextFrame.empty() &amp;&amp; doneTravel) </div><div class="line">		break;</div><div class="line"></div><div class="line">    //PART 3:traversal</div><div class="line">    curNode = &amp;root[curVisitOffset];</div><div class="line">    bool wasVisible = curNode-&gt;visible &amp;&amp; (curNode-&gt;lastVisited == frameID - 1);</div><div class="line">    bool opened = wasVisible &amp;&amp; !curNode-&gt;isLeaf;</div><div class="line">    curNode-&gt;visible = false;</div><div class="line">    curNode-&gt;lastVisited = frameID;</div><div class="line">    if (!opened) &#123;</div><div class="line">        issueOcculusionQuery(curNode,true);</div><div class="line">        wasVisible ? queryQueueForNextFrame.push(curNode) : queryQueue.push(curNode);</div><div class="line">    &#125;</div><div class="line">    if (wasVisible)</div><div class="line">        traversalNode(curNode, curVisitOffset, toVisit);</div><div class="line"></div><div class="line">    if (curNode-&gt;isLeaf) &#123;</div><div class="line">        //Travel in front-to-back order</div><div class="line">        if (!toVisit.empty()) &#123;</div><div class="line">            curVisitOffset = toVisit.top();</div><div class="line">            toVisit.pop();</div><div class="line">        &#125; else &#123;</div><div class="line">            doneTravel = true;</div><div class="line">            curVisitOffset = 0;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如图</p>
+<p>这样，1.减少可见性查询的次数；2.消除CPU的性能瓶颈以及GPU的饥饿；两个目的就达到了~</p>
+<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><p><strong>（关于BVH算法，《Phisical Based Rendering》P255-P308页有详细介绍，我的代码也是基于它实现的，读者可以自行查找或下载我的源代码）</strong></p>
+<p><strong>（我是将CHC算法用于VR引擎，会有左右眼渲染两次，所以有些时候会进行两次可见性测试，读者实验时可以删去多余代码）</strong></p>
+<h3 id="定义变量"><a href="#定义变量" class="headerlink" title="定义变量"></a>定义变量</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">//All of the objects</div><div class="line">Objects = gIsLeft? leftBvhAccel-&gt;getOrderedMesh():rightBvhAccel-&gt;getOrderedMesh();</div><div class="line">//For occlusion query(Terminal Node)</div><div class="line">std::queue&lt;LinearBVHNode*&gt; queryQueue; </div><div class="line">//For occlusion query(Open Node)</div><div class="line">std::queue&lt;LinearBVHNode*&gt; queryQueueForNextFrame; </div><div class="line"></div><div class="line">//For travel in front-back order</div><div class="line">int curVisitOffset = 0; </div><div class="line">std::stack&lt;int&gt; toVisit;</div><div class="line"></div><div class="line">//For travel</div><div class="line">LinearBVHNode* curNode;</div><div class="line">LinearBVHNode* root = gIsLeft ? leftBvhAccel-&gt;getLinearNodes() : rightBvhAccel-&gt;getLinearNodes();</div><div class="line"></div><div class="line">//Judge the travel is done</div><div class="line">bool doneTravel = false;</div></pre></td></tr></table></figure>
+<h3 id="循环主体"><a href="#循环主体" class="headerlink" title="循环主体"></a>循环主体</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">while(true)&#123;</div><div class="line">    //PART 1:Query and process finished queries</div><div class="line">    while (!queryQueue.empty()|| doneTravel == true) &#123;</div><div class="line">        //······</div><div class="line">	&#125;</div><div class="line"></div><div class="line">    //PART 2:Check if the algorithm is done</div><div class="line">    if (queryQueue.empty() &amp;&amp; queryQueueForNextFrame.empty() &amp;&amp; doneTravel) </div><div class="line">		break;</div><div class="line"></div><div class="line">    //PART 3:traversal</div><div class="line">    //······</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="PART-1-Query-and-process-finished-queries"><a href="#PART-1-Query-and-process-finished-queries" class="headerlink" title="PART 1:Query and process finished queries"></a>PART 1:Query and process finished queries</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">while (!queryQueue.empty()|| doneTravel == true) &#123;</div><div class="line">    if (!queryQueue.empty()&amp;&amp; resultAvailable(queryQueue.front())) &#123;</div><div class="line">        //Previous invisible is ready</div><div class="line">        //······</div><div class="line">    &#125;</div><div class="line">    else if (!queryQueueForNextFrame.empty()&amp;&amp; resultAvailable(queryQueueForNextFrame.front())) &#123;</div><div class="line">		//previous visible is ready</div><div class="line">        //······</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    if (queryQueue.empty() &amp;&amp; queryQueueForNextFrame.empty()) break;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>Previous invisible is ready</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">if (!queryQueue.empty()&amp;&amp; resultAvailable(queryQueue.front())) &#123;</div><div class="line">    //Previous invisible is ready</div><div class="line">    curNode = queryQueue.front();</div><div class="line">    queryQueue.pop();</div><div class="line"></div><div class="line">    //If it is visible</div><div class="line">    if (getOcculusionResult(curNode) &gt; 1) &#123;</div><div class="line">        traversalNode(curNode, curVisitOffset, toVisit);</div><div class="line">        pullUpVisibility(root, curNode);</div><div class="line">        glDeleteQueriesARB(1, &amp;curNode-&gt;queryID);</div><div class="line">    &#125; else &#123;</div><div class="line">        //If it is not visible,query for the other eyes</div><div class="line">        //It is only for VR!</div><div class="line">        issueOcculusionQuery(curNode, false);</div><div class="line">        if (getOcculusionResult(curNode) &gt; 1) &#123;</div><div class="line">            //If the target is visible</div><div class="line">            traversalNode(curNode, curVisitOffset, toVisit);</div><div class="line">            //Set it&apos;s visible property as same as it&apos;s parent </div><div class="line">            pullUpVisibility(root, curNode);</div><div class="line">            glDeleteQueriesARB(1, &amp;curNode-&gt;queryID);</div><div class="line">        &#125;</div><div class="line">        else &#123;</div><div class="line">            //The target is not visible</div><div class="line">            if (toVisit.empty() &amp;&amp; curVisitOffset == 0) &#123;</div><div class="line">                doneTravel = true;</div><div class="line">                break;</div><div class="line">            &#125; else if (toVisit.empty() &amp;&amp; !curNode-&gt;isLeaf) &#123;</div><div class="line">                //the last invisible node</div><div class="line">                doneTravel = true;</div><div class="line">                break;</div><div class="line">            &#125; else if (!curNode-&gt;isLeaf) &#123;</div><div class="line">                //invisible node</div><div class="line">                curVisitOffset = toVisit.top();</div><div class="line">                toVisit.pop();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>Previous visible is ready</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">else if (!queryQueueForNextFrame.empty()&amp;&amp; resultAvailable(queryQueueForNextFrame.front())) &#123;</div><div class="line">    //previous visible is ready</div><div class="line">    curNode = queryQueueForNextFrame.front();</div><div class="line">    queryQueueForNextFrame.pop();</div><div class="line">    if (getOcculusionResult(curNode) &gt; 1) &#123;</div><div class="line">        pullUpVisibility(root, curNode);</div><div class="line">        glDeleteQueriesARB(1, &amp;curNode-&gt;queryID);</div><div class="line">    &#125;</div><div class="line">    else &#123;</div><div class="line">        issueOcculusionQuery(curNode, false);</div><div class="line">        if (getOcculusionResult(curNode) &gt; 1) &#123;</div><div class="line">            pullUpVisibility(root, curNode);</div><div class="line">            glDeleteQueriesARB(1, &amp;curNode-&gt;queryID);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="PART-3-Traversal"><a href="#PART-3-Traversal" class="headerlink" title="PART 3:Traversal"></a>PART 3:Traversal</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">curNode = &amp;root[curVisitOffset];</div><div class="line">bool wasVisible = curNode-&gt;visible &amp;&amp; (curNode-&gt;lastVisited == frameID - 1);</div><div class="line">bool opened = wasVisible &amp;&amp; !curNode-&gt;isLeaf;</div><div class="line">curNode-&gt;visible = false;</div><div class="line">curNode-&gt;lastVisited = frameID;</div><div class="line">if (!opened) &#123;</div><div class="line">    issueOcculusionQuery(curNode,true);</div><div class="line">    wasVisible ? queryQueueForNextFrame.push(curNode) : queryQueue.push(curNode);</div><div class="line">&#125;</div><div class="line">if (wasVisible)</div><div class="line">    traversalNode(curNode, curVisitOffset, toVisit);</div><div class="line"></div><div class="line">if (curNode-&gt;isLeaf) &#123;</div><div class="line">    if (!toVisit.empty()) &#123;</div><div class="line">        curVisitOffset = toVisit.top();</div><div class="line">        toVisit.pop();</div><div class="line">    &#125; else &#123;</div><div class="line">        doneTravel = true;</div><div class="line">        curVisitOffset = 0;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Function-issueOcculusionQuery"><a href="#Function-issueOcculusionQuery" class="headerlink" title="Function:issueOcculusionQuery"></a>Function:issueOcculusionQuery</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">void issueOcculusionQuery(LinearBVHNode* vCurNode, bool isLeft) &#123;</div><div class="line">	glDepthMask(GL_FALSE);</div><div class="line">	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);</div><div class="line">	glGenQueriesARB(1, &amp;(vCurNode-&gt;queryID));</div><div class="line">	glBeginQueryARB(GL_SAMPLES_PASSED_ARB, vCurNode-&gt;queryID);</div><div class="line"></div><div class="line">	drawBound(vCurNode, isLeft);</div><div class="line"></div><div class="line">	glEndQueryARB(GL_SAMPLES_PASSED_ARB);</div><div class="line">	glDepthMask(GL_TRUE);</div><div class="line">	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Function-drawBound"><a href="#Function-drawBound" class="headerlink" title="Function:drawBound"></a>Function:drawBound</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">void drawBound(LinearBVHNode* vCurNode, bool isLeft)&#123;</div><div class="line">    //Draw the Node&apos;s Bounding Box</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Function-traversalNode"><a href="#Function-traversalNode" class="headerlink" title="Function:traversalNode"></a>Function:traversalNode</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">void traversalNode(LinearBVHNode* curNode, int&amp; curVisitOffset, stack&lt;int&gt;&amp; toVisit) &#123;</div><div class="line">	if (curNode-&gt;isLeaf) &#123;</div><div class="line">		drawNode(curNode,true);</div><div class="line">		glBindFramebuffer(GL_FRAMEBUFFER, 0);</div><div class="line">		glBindFramebuffer(GL_FRAMEBUFFER, drawingRightFbo);</div><div class="line">		drawNode(curNode,false);</div><div class="line">		glBindFramebuffer(GL_FRAMEBUFFER, drawingLeftFbo);</div><div class="line"></div><div class="line">	&#125;</div><div class="line">		</div><div class="line">	else &#123;</div><div class="line">		glm::vec3 EyeToCentroid = curNode-&gt;bounds.getCentroid() - camera.Position;</div><div class="line">		int DirisNeg[3]&#123; EyeToCentroid.x &lt; 0, EyeToCentroid.y &lt; 0, EyeToCentroid.z &lt; 0 &#125;;</div><div class="line">		if (DirisNeg[curNode-&gt;axis]) &#123;</div><div class="line">			toVisit.push(curVisitOffset + 1);</div><div class="line">			curVisitOffset = curNode-&gt;secondChildOffset;</div><div class="line">		&#125; else &#123;</div><div class="line">			toVisit.push(curNode-&gt;secondChildOffset);</div><div class="line">			++curVisitOffset;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Function-pullUpVisibility"><a href="#Function-pullUpVisibility" class="headerlink" title="Function:pullUpVisibility"></a>Function:pullUpVisibility</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">void pullUpVisibility(LinearBVHNode* root, LinearBVHNode* curNode) &#123;</div><div class="line">	while (!curNode-&gt;visible) &#123;</div><div class="line">		curNode-&gt;visible = true;</div><div class="line">		curNode = &amp;root[curNode-&gt;parentOffset];</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Function-getOcculusionResult"><a href="#Function-getOcculusionResult" class="headerlink" title="Function:getOcculusionResult"></a>Function:getOcculusionResult</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">GLuint getOcculusionResult(LinearBVHNode* curNode) &#123;</div><div class="line">    GLuint sampleCount;</div><div class="line">    glGetQueryObjectuivARB(curNode-&gt;queryID, GL_QUERY_RESULT_ARB, &amp;sampleCount);</div><div class="line">    return sampleCount;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="Function-resultAvailable"><a href="#Function-resultAvailable" class="headerlink" title="Function:resultAvailable"></a>Function:resultAvailable</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">bool resultAvailable(LinearBVHNode* node) &#123;</div><div class="line">	GLint available;</div><div class="line">	glGetQueryObjectivARB(node-&gt;queryID, GL_QUERY_RESULT_AVAILABLE_ARB, &amp;available);</div><div class="line">	//	glGetOcclusionQueryuivNV(node-&gt;queryID, GL_PIXEL_COUNT_AVAILABLE_NV,&amp;available);</div><div class="line">	return available;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h1><p><a href="https://github.com/whatseven/CHC-Algorithm.git" target="_blank" rel="external">Github</a>(喜欢就fork一个哇)</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-03-28T13:52:07.687Z" itemprop="dateUpdated">2018-03-28 21:52:07</time>
+</span><br>
+
+
+        
+        true
+        
+    </div>
+    <footer>
+        <a href="blog.llsevenr.cn">
+            <img src="http://otbwgn2nv.bkt.clouddn.com/head.jpg" alt="whatseven">
+            whatseven
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=blog.llsevenr.cn/2018/03/22/Coherent-Occlusion-Culling-CHC-算法的原理与实现/&title=《Coherent Occlusion Culling(CHC) 算法的原理与实现》 — whatseven的博客&pic=http://otbwgn2nv.bkt.clouddn.com/head.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=blog.llsevenr.cn/2018/03/22/Coherent-Occlusion-Culling-CHC-算法的原理与实现/&title=《Coherent Occlusion Culling(CHC) 算法的原理与实现》 — whatseven的博客&source=whatseven的博客" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=blog.llsevenr.cn/2018/03/22/Coherent-Occlusion-Culling-CHC-算法的原理与实现/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Coherent Occlusion Culling(CHC) 算法的原理与实现》 — whatseven的博客&url=blog.llsevenr.cn/2018/03/22/Coherent-Occlusion-Culling-CHC-算法的原理与实现/&via=blog.llsevenr.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=blog.llsevenr.cn/2018/03/22/Coherent-Occlusion-Culling-CHC-算法的原理与实现/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/09/01/用OpenCV进行相机标定/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">用OpenCV进行相机标定</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="http://otbwgn2nv.bkt.clouddn.com/%E6%94%AF%E4%BB%98%E5%AE%9D.jpg" alt="打赏二维码">
+        </div>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>whatseven &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=blog.llsevenr.cn/2018/03/22/Coherent-Occlusion-Culling-CHC-算法的原理与实现/&title=《Coherent Occlusion Culling(CHC) 算法的原理与实现》 — whatseven的博客&pic=http://otbwgn2nv.bkt.clouddn.com/head.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=blog.llsevenr.cn/2018/03/22/Coherent-Occlusion-Culling-CHC-算法的原理与实现/&title=《Coherent Occlusion Culling(CHC) 算法的原理与实现》 — whatseven的博客&source=whatseven的博客" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=blog.llsevenr.cn/2018/03/22/Coherent-Occlusion-Culling-CHC-算法的原理与实现/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Coherent Occlusion Culling(CHC) 算法的原理与实现》 — whatseven的博客&url=blog.llsevenr.cn/2018/03/22/Coherent-Occlusion-Culling-CHC-算法的原理与实现/&via=blog.llsevenr.cn" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=blog.llsevenr.cn/2018/03/22/Coherent-Occlusion-Culling-CHC-算法的原理与实现/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=blog.llsevenr.cn/2018/03/22/Coherent-Occlusion-Culling-CHC-算法的原理与实现/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '咦怎么走了';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '回来就好回来就好';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
