@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="blog.llsevenr.cn/"/>
-  <updated>2018-03-28T13:52:07.687Z</updated>
+  <updated>2018-03-28T14:03:01.861Z</updated>
   <id>blog.llsevenr.cn/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="blog.llsevenr.cn/2018/03/22/Coherent-Occlusion-Culling-CHC-%E7%AE%97%E6%B3%95%E7%9A%84%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0/"/>
     <id>blog.llsevenr.cn/2018/03/22/Coherent-Occlusion-Culling-CHC-算法的原理与实现/</id>
     <published>2018-03-22T13:04:06.000Z</published>
-    <updated>2018-03-28T13:52:07.687Z</updated>
+    <updated>2018-03-28T14:03:01.861Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>CHC算法是Jiˇrí Bittner在2004年提出的一种遮挡剔除的算法，其中主要运用到了渲染的（Temporal coherence）时间相干性以及（Spatial coherence）空间相干性，同时运用BVH（Bounding Volume Hirachical）管理场景并且通过基于硬件的遮挡查询对遮挡物进行剔除，提高渲染速度。</p>
@@ -48,10 +48,11 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="https://en.wikipedia.org/wiki/Bounding_volume_hierarchy)" alt="Bounding Volume Hirachical](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Example_of_bounding_volume_hierarchy.svg/750px-Example_of_bounding_volume_hierarchy.svg.png)(图片来源[Wikipedia" title="">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Example_of_bounding_volume_hierarchy.svg/750px-Example_of_bounding_volume_hierarchy.svg.png" alt="Bounding Volume Hirachical" title="">
                 </div>
-                <div class="image-caption">Bounding Volume Hirachical](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Example_of_bounding_volume_hierarchy.svg/750px-Example_of_bounding_volume_hierarchy.svg.png)(图片来源[Wikipedia</div>
+                <div class="image-caption">Bounding Volume Hirachical</div>
             </figure>
+<p>(图片来源<a href="https://en.wikipedia.org/wiki/Bounding_volume_hierarchy" target="_blank" rel="external">Wikipedia</a>)</p>
 <p>如图所示，场景中一共有6个物体，而树状结构一共有4个内部节点，每个物体都被它的父节点包围，每个内部节点也被它的父节点包围。</p>
 <p>算法流程如下：在渲染开始时会从根节点依次往下遍历，并利用Hardware Occlusion Culling的方法检测节点包围盒对于当前场景是否可见，如果可见则遍历子节点直至叶节点。如不可见则证明该包围盒下所有节点都不可见，则跳过该节点继续遍历。</p>
 <figure class="image-bubble">
