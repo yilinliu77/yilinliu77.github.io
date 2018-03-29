@@ -19,8 +19,9 @@
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="">
+    <meta name="keywords" content="Computer Graphics,Occlusion Culling">
     <meta name="description" content="CHC算法是Jiˇrí Bittner在2004年提出的一种遮挡剔除的算法，其中主要运用到了渲染的（Temporal coherence）时间相干性以及（Spatial coherence）空间相干性，同时运用BVH（Bounding Volume Hirachical）管理场景并且通过基于硬件的遮挡查询对遮挡物进行剔除，提高渲染速度。  算法背景Hardware Occlusion Culli">
+<meta name="keywords" content="Computer Graphics,Occlusion Culling">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Coherent Occlusion Culling(CHC) 算法的原理与实现">
 <meta property="og:url" content="blog.llsevenr.cn/2018/03/22/Coherent-Occlusion-Culling-CHC-算法的原理与实现/index.html">
@@ -28,7 +29,7 @@
 <meta property="og:description" content="CHC算法是Jiˇrí Bittner在2004年提出的一种遮挡剔除的算法，其中主要运用到了渲染的（Temporal coherence）时间相干性以及（Spatial coherence）空间相干性，同时运用BVH（Bounding Volume Hirachical）管理场景并且通过基于硬件的遮挡查询对遮挡物进行剔除，提高渲染速度。  算法背景Hardware Occlusion Culli">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Example_of_bounding_volume_hierarchy.svg/750px-Example_of_bounding_volume_hierarchy.svg.png">
 <meta property="og:image" content="http://otbwgn2nv.bkt.clouddn.com/CHC-1.png">
-<meta property="og:updated_time" content="2018-03-28T14:03:01.861Z">
+<meta property="og:updated_time" content="2018-03-29T02:47:07.048Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Coherent Occlusion Culling(CHC) 算法的原理与实现">
 <meta name="twitter:description" content="CHC算法是Jiˇrí Bittner在2004年提出的一种遮挡剔除的算法，其中主要运用到了渲染的（Temporal coherence）时间相干性以及（Spatial coherence）空间相干性，同时运用BVH（Bounding Volume Hirachical）管理场景并且通过基于硬件的遮挡查询对遮挡物进行剔除，提高渲染速度。  算法背景Hardware Occlusion Culli">
@@ -144,6 +145,8 @@
 </time>
 
 
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Graphics/">Computer Graphics</a></li></ul>
+
             
         </h5>
     </div>
@@ -172,6 +175,8 @@
             <time class="post-time" title="2018-03-22 21:04:06" datetime="2018-03-22T13:04:06.000Z"  itemprop="datePublished">2018-03-22</time>
 
             
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Graphics/">Computer Graphics</a></li></ul>
+
 
 
             
@@ -264,7 +269,7 @@
 <h4 id="Function-pullUpVisibility"><a href="#Function-pullUpVisibility" class="headerlink" title="Function:pullUpVisibility"></a>Function:pullUpVisibility</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">void pullUpVisibility(LinearBVHNode* root, LinearBVHNode* curNode) &#123;</div><div class="line">	while (!curNode-&gt;visible) &#123;</div><div class="line">		curNode-&gt;visible = true;</div><div class="line">		curNode = &amp;root[curNode-&gt;parentOffset];</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h4 id="Function-getOcculusionResult"><a href="#Function-getOcculusionResult" class="headerlink" title="Function:getOcculusionResult"></a>Function:getOcculusionResult</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">GLuint getOcculusionResult(LinearBVHNode* curNode) &#123;</div><div class="line">    GLuint sampleCount;</div><div class="line">    glGetQueryObjectuivARB(curNode-&gt;queryID, GL_QUERY_RESULT_ARB, &amp;sampleCount);</div><div class="line">    return sampleCount;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h4 id="Function-resultAvailable"><a href="#Function-resultAvailable" class="headerlink" title="Function:resultAvailable"></a>Function:resultAvailable</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">bool resultAvailable(LinearBVHNode* node) &#123;</div><div class="line">	GLint available;</div><div class="line">	glGetQueryObjectivARB(node-&gt;queryID, GL_QUERY_RESULT_AVAILABLE_ARB, &amp;available);</div><div class="line">	//	glGetOcclusionQueryuivNV(node-&gt;queryID, GL_PIXEL_COUNT_AVAILABLE_NV,&amp;available);</div><div class="line">	return available;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h1 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h1><p><a href="https://github.com/whatseven/CHC-Algorithm.git" target="_blank" rel="external">Github</a>(喜欢就fork一个哇)</p>
+<h1 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h1><p><a href="https://github.com/whatseven/CHC-Algorithm.git" target="_blank" rel="external">Github</a>(喜欢就star一个哇~)</p>
 
         </div>
 
@@ -272,7 +277,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-03-28T14:03:01.861Z" itemprop="dateUpdated">2018-03-28 22:03:01</time>
+    最后更新时间：<time datetime="2018-03-29T02:47:07.048Z" itemprop="dateUpdated">2018-03-29 10:47:07</time>
 </span><br>
 
 
@@ -297,6 +302,8 @@
 
         <div class="post-footer">
             
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Computer-Graphics/">Computer Graphics</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Occlusion-Culling/">Occlusion Culling</a></li></ul>
+
 
             
 <div class="page-share-wrap">

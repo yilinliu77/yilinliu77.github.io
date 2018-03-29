@@ -5,14 +5,21 @@
     
   <url>
     <loc>blog.llsevenr.cn/2018/03/22/Coherent-Occlusion-Culling-CHC-%E7%AE%97%E6%B3%95%E7%9A%84%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0/</loc>
-    <lastmod>2018-03-28T14:03:01.861Z</lastmod>
+    <lastmod>2018-03-29T02:47:07.048Z</lastmod>
     <data>
         <display>
         <title>Coherent Occlusion Culling(CHC) 算法的原理与实现</title>
         <pubTime>2018-03-22T13:04:06.000Z</pubTime>
         
+        <tag>Computer Graphics</tag>
+         
+        <tag>Occlusion Culling</tag>
+         
          
            
+             
+              <breadCrumb title="Computer Graphics" url="blog.llsevenr.cn/categories/Computer-Graphics/"/>
+          
         </display>
     </data>
     </url>

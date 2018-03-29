@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="blog.llsevenr.cn/"/>
-  <updated>2018-03-28T14:03:01.861Z</updated>
+  <updated>2018-03-29T02:47:07.048Z</updated>
   <id>blog.llsevenr.cn/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="blog.llsevenr.cn/2018/03/22/Coherent-Occlusion-Culling-CHC-%E7%AE%97%E6%B3%95%E7%9A%84%E5%8E%9F%E7%90%86%E4%B8%8E%E5%AE%9E%E7%8E%B0/"/>
     <id>blog.llsevenr.cn/2018/03/22/Coherent-Occlusion-Culling-CHC-算法的原理与实现/</id>
     <published>2018-03-22T13:04:06.000Z</published>
-    <updated>2018-03-28T14:03:01.861Z</updated>
+    <updated>2018-03-29T02:47:07.048Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>CHC算法是Jiˇrí Bittner在2004年提出的一种遮挡剔除的算法，其中主要运用到了渲染的（Temporal coherence）时间相干性以及（Spatial coherence）空间相干性，同时运用BVH（Bounding Volume Hirachical）管理场景并且通过基于硬件的遮挡查询对遮挡物进行剔除，提高渲染速度。</p>
@@ -104,7 +104,7 @@
 <h4 id="Function-pullUpVisibility"><a href="#Function-pullUpVisibility" class="headerlink" title="Function:pullUpVisibility"></a>Function:pullUpVisibility</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">void pullUpVisibility(LinearBVHNode* root, LinearBVHNode* curNode) &#123;</div><div class="line">	while (!curNode-&gt;visible) &#123;</div><div class="line">		curNode-&gt;visible = true;</div><div class="line">		curNode = &amp;root[curNode-&gt;parentOffset];</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h4 id="Function-getOcculusionResult"><a href="#Function-getOcculusionResult" class="headerlink" title="Function:getOcculusionResult"></a>Function:getOcculusionResult</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">GLuint getOcculusionResult(LinearBVHNode* curNode) &#123;</div><div class="line">    GLuint sampleCount;</div><div class="line">    glGetQueryObjectuivARB(curNode-&gt;queryID, GL_QUERY_RESULT_ARB, &amp;sampleCount);</div><div class="line">    return sampleCount;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h4 id="Function-resultAvailable"><a href="#Function-resultAvailable" class="headerlink" title="Function:resultAvailable"></a>Function:resultAvailable</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">bool resultAvailable(LinearBVHNode* node) &#123;</div><div class="line">	GLint available;</div><div class="line">	glGetQueryObjectivARB(node-&gt;queryID, GL_QUERY_RESULT_AVAILABLE_ARB, &amp;available);</div><div class="line">	//	glGetOcclusionQueryuivNV(node-&gt;queryID, GL_PIXEL_COUNT_AVAILABLE_NV,&amp;available);</div><div class="line">	return available;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h1 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h1><p><a href="https://github.com/whatseven/CHC-Algorithm.git" target="_blank" rel="external">Github</a>(喜欢就fork一个哇)</p>
+<h1 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h1><p><a href="https://github.com/whatseven/CHC-Algorithm.git" target="_blank" rel="external">Github</a>(喜欢就star一个哇~)</p>
 ]]></content>
     
     <summary type="html">
@@ -114,6 +114,12 @@
     
     </summary>
     
+      <category term="Computer Graphics" scheme="blog.llsevenr.cn/categories/Computer-Graphics/"/>
+    
+    
+      <category term="Computer Graphics" scheme="blog.llsevenr.cn/tags/Computer-Graphics/"/>
+    
+      <category term="Occlusion Culling" scheme="blog.llsevenr.cn/tags/Occlusion-Culling/"/>
     
   </entry>
   
