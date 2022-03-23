@@ -2,7 +2,7 @@
 ---
 <!-- _layouts/bib.html -->
       <div class="row">
-        <div class="col-sm-2 abbr">
+        <!-- <div class="col-sm-1 abbr">
         {%- if entry.abbr -%}
           {%- if site.data.venues[entry.abbr] -%}
           <abbr class="badge"><a href="{{site.data.venues[entry.abbr].url}}">{{entry.abbr}}</a></abbr>
@@ -10,6 +10,16 @@
           <abbr class="badge">{{entry.abbr}}</abbr>
           {%- endif -%}
         {%- endif -%}
+        </div> -->
+
+        <div class="col-sm-4" align="center" style="display: flex; justify-content: center; align-items: center;">
+          {%- if entry.teaser -%}
+            {% if entry.teaser contains '://' -%}
+            <img class="teaser" style="box-shadow: 10px 10px 10px rgba(0,0,0,.5)" width="100%" src="{{ entry.teaser }}">
+            {%- else -%}
+            <img class="teaser" style="box-shadow: 10px 10px 10px rgba(0,0,0,.5)" width="100%" src="{{ entry.teaser | prepend: '/assets/img/paper_teasers/' | relative_url }}">
+            {%- endif -%}
+          {%- endif -%}
         </div>
 
         <!-- Entry bib key -->

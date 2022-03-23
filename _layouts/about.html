@@ -54,6 +54,12 @@ layout: default
             
           </div>
           {%- endif %}
+
+          {% if page.awards -%}
+          <!-- awards -->
+          {%- include awards.html %}
+          {%- endif %}
+          
         </article>
 
 </div>

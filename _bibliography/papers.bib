@@ -1,72 +1,61 @@
 ---
 ---
 
-@string{aps = {American Physical Society,}}
-
-@book{einstein1956investigations,
-  bibtex_show={true},
-  title={Investigations on the Theory of the Brownian Movement},
-  author={Einstein, Albert},
-  year={1956},
-  publisher={Courier Corporation,}
+@article{DroneFly,
+    abstract = {Existing approaches have shown that, through carefully planning flight trajectories, images captured by Unmanned Aerial Vehicles (UAVs) can be used to reconstruct high-quality 3D models for real environments. These approaches greatly simplify and cut the cost of large-scale urban scene reconstruction. However, to properly capture height discontinuities in urban scenes, all state-of-the-art methods require prior knowledge on scene geometry and hence, additional prepossessing steps are needed before performing the actual image acquisition flights. To address this limitation and to make urban modeling techniques even more accessible, we present a real-time explore-and-reconstruct planning algorithm that does not require any prior knowledge for the scenes. Using only captured 2D images, we estimate 3D bounding boxes for buildings on-the-fly and use them to guide online path planning for both scene exploration and building observation. Experimental results demonstrate that the aerial paths planned by our algorithm in realtime for unknown environments support reconstructing 3D models with comparable qualities and lead to shorter flight air time.},
+    author = {Liu, Yilin and Cui, Ruiqi and Xie, Ke and Gong, Minglun and Huang, Hui},
+    issn = {0730-0301},
+    journal = {ACM Trans. on Graphics (Proc. of SIGGRAPH Asia)},
+    keywords = {aerial path planning,high-quality scene reconstruction,real-time urban exploration},
+    month = {dec},
+    number = {6},
+    title = {{Aerial Path Planning for Online Real-Time Exploration and Offline High-Quality Reconstruction of Large-Scale Urban Scenes}},
+    volume = {40},
+    year = {2021},
+    teaser = {dronefly.jpg},
+    website = {https://vcc.tech/research/2021/DroneFly},
+    selected = true
 }
 
-@article{einstein1950meaning,
-  abbr={AJP},
-  bibtex_show={true},
-  title={The meaning of relativity},
-  author={Einstein, Albert and Taub, AH},
-  journal={American Journal of Physics,},
-  volume={18},
-  number={6},
-  pages={403--404},
-  year={1950},
-  publisher={American Association of Physics Teachers,}
+@article{UrbanScene3D,
+    title={UrbanScene3D: A Large Scale Urban Scene Dataset and Simulator},
+    author={Yilin Liu and Fuyou Xue and Hui Huang},
+    eprint={2107.04286},
+    archivePrefix={arXiv},
+    year={2021},
+    abstract = {The ability to perceive the environments in different ways is essential to robotic research. This involves the analysis of both 2D and 3D data sources. We present a large scale urban scene dataset associated with a handy simulator based on Unreal Engine 4 and AirSim, which consists of both man-made and real-world reconstruction scenes in different scales, referred to as UrbanScene3D. Unlike previous works that purely based on 2D information or man-made 3D CAD models, UrbanScene3D contains both compact man-made models and detailed real-world models reconstructed by aerial images. Each building has been manually extracted from the entire scene model and then has been assigned with a unique label, forming an instance segmentation map. The provided 3D ground-truth textured models with instance segmentation labels in UrbanScene3D allow users to obtain all kinds of data they would like to have: instance segmentation map, depth map in arbitrary resolution, 3D point cloud/mesh in both visible and invisible places, etc. In addition, with the help of AirSim, users can also simulate the robots (cars/drones)to test a variety of autonomous tasks in the proposed city environment. Please refer to our paper and website(https://vcc.tech/UrbanScene3D/) for further details and applications.},
+    teaser = {urban3d.jpg},
+    website = {https://vcc.tech/UrbanScene3D/},
+    selected = true
 }
 
-@article{PhysRev.47.777,
-  abbr={PhysRev},
-  title={Can Quantum-Mechanical Description of Physical Reality Be Considered Complete?},
-  author={Einstein, A. and Podolsky, B. and Rosen, N.},
-  abstract={In a complete theory there is an element corresponding to each element of reality. A sufficient condition for the reality of a physical quantity is the possibility of predicting it with certainty, without disturbing the system. In quantum mechanics in the case of two physical quantities described by non-commuting operators, the knowledge of one precludes the knowledge of the other. Then either (1) the description of reality given by the wave function in quantum mechanics is not complete or (2) these two quantities cannot have simultaneous reality. Consideration of the problem of making predictions concerning a system on the basis of measurements made on another system that had previously interacted with it leads to the result that if (1) is false then (2) is also false. One is thus led to conclude that the description of reality as given by a wave function is not complete.},
-  journal={Phys. Rev.,},
-  volume={47},
-  issue={10},
-  pages={777--780},
-  numpages={0},
-  year={1935},
-  month={May},
-  publisher=aps,
-  doi={10.1103/PhysRev.47.777},
-  url={http://link.aps.org/doi/10.1103/PhysRev.47.777},
-  html={https://journals.aps.org/pr/abstract/10.1103/PhysRev.47.777},
-  pdf={example_pdf.pdf},
-  selected={true}
+@article{DroneScan20,
+    abstract = {With rapid development in UAV technologies, it is now possible to reconstruct large-scale outdoor scenes using only images captured by low-cost drones. The problem, however, becomes how to plan the aerial path for a drone to capture images so that two conflicting goals are optimized: maximizing the reconstruction quality and minimizing mid-air image acquisition effort. Existing approaches either resort to pre-defined dense and thus inefficient view sampling strategy, or plan the path adaptively but require two onsite flight passes and intensive computation in-between. Hence, using these methods to capture and reconstruct large-scale scenes can be tedious. In this paper, we present an adaptive aerial path planning algorithm that can be done before the site visit. Using only a 2D map and a satellite image of the to-be-reconstructed area, we first compute a coarse 2.5D model for the scene based on the relationship between buildings and their shadows. A novel Max-Min optimization is then proposed to select a minimal set of viewpoints that maximizes the reconstructability under the the same number of viewpoints. Experimental results on benchmark show that our planning approach can effectively reduce the number of viewpoints needed than the previous state-of-the-art method, while maintaining comparable reconstruction quality. Since no field computation or a second visit is needed, and the view number is also minimized, our approach significantly reduces the time required in the field as well as the off-line computation cost for multi-view stereo reconstruction, making it possible to reconstruct a large-scale urban scene in a short time with moderate effort.},
+    author = {Zhou, Xiaohui and Xie, Ke and Huang, Kai and Liu, Yilin and Zhou, Yang and Gong, Minglun and Huang, Hui},
+    journal = {ACM Trans. on Graphics (Proc. of SIGGRAPH Asia)},
+    keywords = {aerial path planning,geometric proxy,multi-view stereo reconstruction,view generation,view selection},
+    number = {6},
+    pages = {192:1----192:16},
+    title = {{Offsite aerial path planning for efficient urban scene reconstruction}},
+    volume = {39},
+    year = {2020},
+    teaser = {dronescan.jpg},
+    website = {https://vcc.tech/research/2020/DroneScan},
+    selected = true
+
 }
 
-@article{einstein1905molekularkinetischen,
-  title={{\"U}ber die von der molekularkinetischen Theorie der W{\"a}rme geforderte Bewegung von in ruhenden Fl{\"u}ssigkeiten suspendierten Teilchen},
-  author={Einstein, A.},
-  journal={Annalen der physik,},
-  volume={322},
-  number={8},
-  pages={549--560},
-  year={1905},
-  publisher={Wiley Online Library}
+@article{VGFNet21,
+    title={VGF-Net: Visual-Geometric Fusion Learning for Simultaneous Drone Navigation and Height Mapping},
+    author={Yilin Liu and Ke Xie and Hui Huang},
+    journal={Graphical Models},
+    volume={116},
+    pages={101108},
+    year={2021},
+    abstract = {The drone navigation requires the comprehensive understanding of both visual and geometric information in the 3D world. In this paper, we present a Visual-Geometric Fusion Network (VGF-Net), a deep network for the fusion analysis of visual/geometric data and the construction of 2.5D height maps for simultaneous drone navigation in novel environments. Given an initial rough height map and a sequence of RGB images, our VGF-Net extracts the visual information of the scene, along with a sparse set of 3D keypoints that capture the geometric relationship between objects in the scene. Driven by the data, VGF-Net adaptively fuses visual and geometric information, forming a unified Visual-Geometric Representation. This representation is fed to a new Directional Attention Model (DAM), which helps enhance the visual-geometric object relationship and propagates the informative data to dynamically refine the height map and the corresponding keypoints. An entire end-to-end information fusion and mapping system is formed, demonstrating remarkable robustness and high accuracy on the autonomous drone navigation across complex indoor and large-scale outdoor scenes.},
+    teaser = {vgf.jpg},
+    website = {https://vcc.tech/research/2021/VGFNet},
+    selected = true
+
 }
 
-@article{einstein1905movement,
-  abbr={Ann. Phys.},
-  title={Un the movement of small particles suspended in statiunary liquids required by the molecular-kinetic theory 0f heat},
-  author={Einstein, A.},
-  journal={Ann. Phys.,},
-  volume={17},
-  pages={549--560},
-  year={1905}
-}
-
-@article{einstein1905electrodynamics,
-  title={On the electrodynamics of moving bodies},
-  author={Einstein, A.},
-  year={1905}
-}
