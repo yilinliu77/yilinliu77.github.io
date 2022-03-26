@@ -2,7 +2,7 @@
 layout: about
 title: About
 permalink: /
-subtitle: <a href='https://vcc.tech/index.html'>VCC@Shenzhen University</a>
+subtitle: whatseven [at] gmail [dot] com
 
 profile:
   align: right

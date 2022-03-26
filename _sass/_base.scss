@@ -8,6 +8,10 @@ p, h1, h2, h3, h4, h5, h6, em, div, li, span, strong {
   color: var(--global-text-color);
 }
 
+h1, h2 {
+  font-weight: 400;
+}
+
 hr {
   border-top: 1px solid var(--global-divider-color);
 }
@@ -85,7 +89,6 @@ blockquote {
 .profile {
   margin-left: 1rem;
   width: 100%;
-
   .address {
     margin-bottom: 5px;
     margin-top: 5px;
@@ -99,7 +102,7 @@ blockquote {
 
 @media (min-width: 576px) {
   .profile {
-    width: 30%;
+    width: 29%;
     .address {
       p { display: block; }
     }
@@ -226,13 +229,24 @@ blockquote {
 
 // News
 
+.news {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .news table td {
-  font-size: 1rem;
+  font-size: 1.1rem;
+  font-weight: 400;
   color: var(--global-text-color);
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .news table th {
+  font-size: 1.1rem;
   color: var(--global-text-color);
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 // Social (bottom)

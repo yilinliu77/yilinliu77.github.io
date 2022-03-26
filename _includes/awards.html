@@ -1,11 +1,10 @@
-          
-          <div class="awards">
-            <h2>Awards</h2>
+          <div class="news">
+            <h2 style="width: 100% ;border-bottom: 1px solid #000000;">Awards</h2>
             {% if site.awards != blank -%} 
             <div class="table-responsive">
               <table class="table table-sm table-borderless">
               {%- assign awards = site.awards | reverse -%} 
-              {% for item in awards%} 
+              {% for item in awards limit: site.news_limit %} 
                 <tr>
                   <th scope="row">{{ item.date | date: "%b %-d, %Y" }}</th>
                   <td>

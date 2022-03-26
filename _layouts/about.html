@@ -33,13 +33,14 @@ layout: default
             {{ content }}
           </div>
 
-          {% if page.news -%}
-          <!-- News -->
-          {%- include news.html %}
+          {% if page.awards -%}
+          <!-- awards -->
+          {%- include awards.html %}
           {%- endif %}
+
           {% if page.selected_papers -%}
             <!-- Selected papers -->
-            {%- include selected_papers.html %}
+          {%- include selected_papers.html %}
           {%- endif %}
           {%- if page.social %}
           <!-- Social -->
@@ -53,11 +54,6 @@ layout: default
             </div>
             
           </div>
-          {%- endif %}
-
-          {% if page.awards -%}
-          <!-- awards -->
-          {%- include awards.html %}
           {%- endif %}
           
         </article>
