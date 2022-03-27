@@ -17,9 +17,10 @@ hr {
 }
 
 a, table.table a {
-  color: var(--global-theme-color);
+  // color: var(--global-theme-color);
+  color: #D35400;
   &:hover {
-    color: var(--global-theme-color);
+    color: #D35400;
     text-decoration: underline;
   }
   &:hover:after :not(.nav-item.dropdown) {
