@@ -7,7 +7,6 @@
     abstract = {We introduce the first learning-based reconstructability predictor to improve view and path planning for large-scale 3D urban scene acquisition using unmanned drones. In contrast to previous heuristic approaches, our method learns a model that {\em explicitly\/} predicts how well a 3D urban scene will be reconstructed from a set of viewpoints. To make such a model trainable and simultaneously applicable to drone path planning, we simulate the proxy-based 3D scene reconstruction during training to set up the prediction. Specifically, the neural network we design is trained to predict the scene reconstructability as a function of the proxy geometry, a set of viewpoints, and optionally a series of scene images acquired in flight. To reconstruct a new urban scene, we first build the 3D scene proxy, then rely on the predicted reconstruction quality and uncertainty measures by our network, based off of the proxy geometry, to guide the drone path planning. We demonstrate that our data-driven reconstructability predictions are more closely correlated to the true reconstruction quality than prior heuristic measures. Further, our learned predictor can be easily integrated into existing path planners to yield improvements. Finally, we devise a new iterative view planning framework, based on the learned reconstructability, and show superior performance of the new planner when reconstructing both synthetic and real scenes.},
     author = {Liu, Yilin and Lin, Liqiang and Hu, Yue and Xie, Ke and Fu, Chi-Wing and Zhang, Hao and Huang, Hui},
     journal = {ACM Trans. on Graphics (Proc. of SIGGRAPH Asia)},
-    month = {dec},
     number = {6},
     title = {{Learning Reconstructability for Drone Aerial Path Planning}},
     volume = {41},
@@ -23,7 +22,6 @@
     issn = {0730-0301},
     journal = {ACM Trans. on Graphics (Proc. of SIGGRAPH Asia)},
     keywords = {aerial path planning,high-quality scene reconstruction,real-time urban exploration},
-    month = {dec},
     number = {6},
     title = {{Aerial Path Planning for Online Real-Time Exploration and Offline High-Quality Reconstruction of Large-Scale Urban Scenes}},
     volume = {40},
@@ -39,9 +37,10 @@
     booktitle={European Conference on Computer Vision},
     year={2022},
     abstract={
-        We present UrbanScene3D, a large-scale data platform for research of urban scene perception and reconstruction. UrbanScene3D contains over 128k high-resolution images covering 16 scenes including large-scale real urban regions and synthetic cities with 136 $km^2$ area in total. The dataset also contains high-precision LiDAR scans and hundreds of image sets with different observation patterns, which provide a comprehensive benchmark to design and evaluate aerial path planning and 3D reconstruction algorithms. In addition, the dataset, which is built on Unreal Engine and Airsim simulator together with the manually annotated unique instance label for each building in the dataset, enables the generation of all kinds of data, e.g., 2D depth maps, 2D/3D bounding boxes, and 3D point cloud/mesh segmentations, etc. The simulator with physical engine and lighting system not only produce variety of data but also enable users to simulate cars or drones in the proposed urban environment for future research.The dataset with aerial path planning and 3D reconstruction benchmark is available at: \href{https://vcc.tech/UrbanScene3D}.
+        We present UrbanScene3D, a large-scale data platform for research of urban scene perception and reconstruction. UrbanScene3D contains over 128k high-resolution images covering 16 scenes including large-scale real urban regions and synthetic cities with 136 $km^2$ area in total. The dataset also contains high-precision LiDAR scans and hundreds of image sets with different observation patterns, which provide a comprehensive benchmark to design and evaluate aerial path planning and 3D reconstruction algorithms. In addition, the dataset, which is built on Unreal Engine and Airsim simulator together with the manually annotated unique instance label for each building in the dataset, enables the generation of all kinds of data, e.g., 2D depth maps, 2D/3D bounding boxes, and 3D point cloud/mesh segmentations, etc. The simulator with physical engine and lighting system not only produce variety of data but also enable users to simulate cars or drones in the proposed urban environment for future research.
     },
     website = {https://vcc.tech/UrbanScene3D/},
+    teaser = {urban3d.jpg},
     selected = true
 }
 
