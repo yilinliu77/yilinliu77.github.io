@@ -1,9 +1,10 @@
 ---
 ---
 
+
+
 @article{DroneRecon,
-    abstract = {We introduce the first {\em learning-based reconstructability predictor\/} to improve view and path planning for
-large-scale 3D urban scene acquisition using unmanned drones. In contrast to previous heuristic approaches, our method learns a model that {\em explicitly\/} predicts how well a 3D urban scene will be reconstructed from a set of viewpoints. To make such a model trainable and simultaneously applicable to drone path planning, we simulate the proxy-based 3D scene reconstruction during training to set up the prediction. Specifically, the neural network we design is trained to predict the scene reconstructability as a function of the {\em proxy geometry\/}, a set of viewpoints, and optionally a series of scene images acquired in flight. To reconstruct a new urban scene, we first build the 3D scene proxy, then rely on the predicted reconstruction quality and uncertainty measures by our network, based off of the proxy geometry, to guide the drone path planning. We demonstrate that our data-driven reconstructability predictions are more closely correlated to the true reconstruction quality than prior heuristic measures. Further, our learned predictor can be easily integrated into existing path planners to yield improvements. Finally, we devise a new iterative view planning framework, based on the learned reconstructability, and show superior performance of the new planner when reconstructing both synthetic and real scenes.},
+    abstract = {We introduce the first learning-based reconstructability predictor to improve view and path planning for large-scale 3D urban scene acquisition using unmanned drones. In contrast to previous heuristic approaches, our method learns a model that {\em explicitly\/} predicts how well a 3D urban scene will be reconstructed from a set of viewpoints. To make such a model trainable and simultaneously applicable to drone path planning, we simulate the proxy-based 3D scene reconstruction during training to set up the prediction. Specifically, the neural network we design is trained to predict the scene reconstructability as a function of the proxy geometry, a set of viewpoints, and optionally a series of scene images acquired in flight. To reconstruct a new urban scene, we first build the 3D scene proxy, then rely on the predicted reconstruction quality and uncertainty measures by our network, based off of the proxy geometry, to guide the drone path planning. We demonstrate that our data-driven reconstructability predictions are more closely correlated to the true reconstruction quality than prior heuristic measures. Further, our learned predictor can be easily integrated into existing path planners to yield improvements. Finally, we devise a new iterative view planning framework, based on the learned reconstructability, and show superior performance of the new planner when reconstructing both synthetic and real scenes.},
     author = {Liu, Yilin and Lin, Liqiang and Hu, Yue and Xie, Ke and Fu, Chi-Wing and Zhang, Hao and Huang, Hui},
     journal = {ACM Trans. on Graphics (Proc. of SIGGRAPH Asia)},
     month = {dec},
@@ -11,7 +12,7 @@ large-scale 3D urban scene acquisition using unmanned drones. In contrast to pre
     title = {{Learning Reconstructability for Drone Aerial Path Planning}},
     volume = {41},
     year = {2022},
-    teaser = {dronefly.jpg},
+    teaser = {dronerecon.jpg},
     website = {https://vcc.tech/research/2022/DroneRecon},
     selected = true
 }
@@ -32,17 +33,27 @@ large-scale 3D urban scene acquisition using unmanned drones. In contrast to pre
     selected = true
 }
 
-@article{UrbanScene3D,
-    title={UrbanScene3D: A Large Scale Urban Scene Dataset and Simulator},
-    author={Yilin Liu and Fuyou Xue and Hui Huang},
-    eprint={2107.04286},
-    archivePrefix={arXiv},
-    year={2021},
-    abstract = {The ability to perceive the environments in different ways is essential to robotic research. This involves the analysis of both 2D and 3D data sources. We present a large scale urban scene dataset associated with a handy simulator based on Unreal Engine 4 and AirSim, which consists of both man-made and real-world reconstruction scenes in different scales, referred to as UrbanScene3D. Unlike previous works that purely based on 2D information or man-made 3D CAD models, UrbanScene3D contains both compact man-made models and detailed real-world models reconstructed by aerial images. Each building has been manually extracted from the entire scene model and then has been assigned with a unique label, forming an instance segmentation map. The provided 3D ground-truth textured models with instance segmentation labels in UrbanScene3D allow users to obtain all kinds of data they would like to have: instance segmentation map, depth map in arbitrary resolution, 3D point cloud/mesh in both visible and invisible places, etc. In addition, with the help of AirSim, users can also simulate the robots (cars/drones)to test a variety of autonomous tasks in the proposed city environment. Please refer to our paper and website(https://vcc.tech/UrbanScene3D/) for further details and applications.},
-    teaser = {urban3d.jpg},
-    website = {https://vcc.tech/UrbanScene3D/},
-    selected = true
+@inproceedings{UrbanScene3D,
+    title={Capturing, Reconstructing, and Simulating: the UrbanScene3D Dataset},
+    author={Lin, Liqiang and Liu, Yilin and Hu, Yue and Yan, Xingguang and Xie, Ke  and Huang, Hui },
+    booktitle={European Conference on Computer Vision},
+    year={2022},
+    abstract={
+        We present UrbanScene3D, a large-scale data platform for research of urban scene perception and reconstruction. UrbanScene3D contains over 128k high-resolution images covering 16 scenes including large-scale real urban regions and synthetic cities with 136 $km^2$ area in total. The dataset also contains high-precision LiDAR scans and hundreds of image sets with different observation patterns, which provide a comprehensive benchmark to design and evaluate aerial path planning and 3D reconstruction algorithms. In addition, the dataset, which is built on Unreal Engine and Airsim simulator together with the manually annotated unique instance label for each building in the dataset, enables the generation of all kinds of data, e.g., 2D depth maps, 2D/3D bounding boxes, and 3D point cloud/mesh segmentations, etc. The simulator with physical engine and lighting system not only produce variety of data but also enable users to simulate cars or drones in the proposed urban environment for future research.The dataset with aerial path planning and 3D reconstruction benchmark is available at: \href{https://vcc.tech/UrbanScene3D}.
+    }
 }
+
+---@article{UrbanScene3D,
+---    title={UrbanScene3D: A Large Scale Urban Scene Dataset and Simulator},
+---    author={Yilin Liu and Fuyou Xue and Hui Huang},
+---    eprint={2107.04286},
+---    archivePrefix={arXiv},
+---    year={2021},
+---    abstract = {The ability to perceive the environments in different ways is essential to robotic research. This involves the analysis of both 2D and 3D data sources. We present a large scale urban scene dataset associated with a handy simulator based on Unreal Engine 4 and AirSim, which consists of both man-made and real-world reconstruction scenes in different scales, referred to as UrbanScene3D. Unlike previous works that purely based on 2D information or man-made 3D CAD models, UrbanScene3D contains both compact man-made models and detailed real-world models reconstructed by aerial images. Each building has been manually extracted from the entire scene model and then has been assigned with a unique label, forming an instance segmentation map. The provided 3D ground-truth textured models with instance segmentation labels in UrbanScene3D allow users to obtain all kinds of data they would like to have: instance segmentation map, depth map in arbitrary resolution, 3D point cloud/mesh in both visible and invisible places, etc. In addition, with the help of AirSim, users can also simulate the robots (cars/drones)to test a variety of autonomous tasks in the proposed city environment. Please refer to our paper and website(https://vcc.tech/UrbanScene3D/) for further details and applications.},
+---    teaser = {urban3d.jpg},
+---    website = {https://vcc.tech/UrbanScene3D/},
+---    selected = true
+---}
 
 @article{DroneScan20,
     abstract = {With rapid development in UAV technologies, it is now possible to reconstruct large-scale outdoor scenes using only images captured by low-cost drones. The problem, however, becomes how to plan the aerial path for a drone to capture images so that two conflicting goals are optimized: maximizing the reconstruction quality and minimizing mid-air image acquisition effort. Existing approaches either resort to pre-defined dense and thus inefficient view sampling strategy, or plan the path adaptively but require two onsite flight passes and intensive computation in-between. Hence, using these methods to capture and reconstruct large-scale scenes can be tedious. In this paper, we present an adaptive aerial path planning algorithm that can be done before the site visit. Using only a 2D map and a satellite image of the to-be-reconstructed area, we first compute a coarse 2.5D model for the scene based on the relationship between buildings and their shadows. A novel Max-Min optimization is then proposed to select a minimal set of viewpoints that maximizes the reconstructability under the the same number of viewpoints. Experimental results on benchmark show that our planning approach can effectively reduce the number of viewpoints needed than the previous state-of-the-art method, while maintaining comparable reconstruction quality. Since no field computation or a second visit is needed, and the view number is also minimized, our approach significantly reduces the time required in the field as well as the off-line computation cost for multi-view stereo reconstruction, making it possible to reconstruct a large-scale urban scene in a short time with moderate effort.},
