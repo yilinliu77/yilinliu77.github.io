@@ -16,6 +16,19 @@
     selected = true
 }
 
+@article{UrbanScene3D,
+    title={Capturing, Reconstructing, and Simulating: the UrbanScene3D Dataset},
+    author={Lin, Liqiang and Liu, Yilin and Hu, Yue and Yan, Xingguang and Xie, Ke  and Huang, Hui },
+    booktitle={European Conference on Computer Vision},
+    year={2022},
+    abstract={
+        We present UrbanScene3D, a large-scale data platform for research of urban scene perception and reconstruction. UrbanScene3D contains over 128k high-resolution images covering 16 scenes including large-scale real urban regions and synthetic cities with 136 $km^2$ area in total. The dataset also contains high-precision LiDAR scans and hundreds of image sets with different observation patterns, which provide a comprehensive benchmark to design and evaluate aerial path planning and 3D reconstruction algorithms. In addition, the dataset, which is built on Unreal Engine and Airsim simulator together with the manually annotated unique instance label for each building in the dataset, enables the generation of all kinds of data, e.g., 2D depth maps, 2D/3D bounding boxes, and 3D point cloud/mesh segmentations, etc. The simulator with physical engine and lighting system not only produce variety of data but also enable users to simulate cars or drones in the proposed urban environment for future research.
+    },
+    website = {https://vcc.tech/UrbanScene3D/},
+    teaser = {urban3d.jpg},
+    selected = true
+}
+
 @article{DroneFly,
     abstract = {Existing approaches have shown that, through carefully planning flight trajectories, images captured by Unmanned Aerial Vehicles (UAVs) can be used to reconstruct high-quality 3D models for real environments. These approaches greatly simplify and cut the cost of large-scale urban scene reconstruction. However, to properly capture height discontinuities in urban scenes, all state-of-the-art methods require prior knowledge on scene geometry and hence, additional prepossessing steps are needed before performing the actual image acquisition flights. To address this limitation and to make urban modeling techniques even more accessible, we present a real-time explore-and-reconstruct planning algorithm that does not require any prior knowledge for the scenes. Using only captured 2D images, we estimate 3D bounding boxes for buildings on-the-fly and use them to guide online path planning for both scene exploration and building observation. Experimental results demonstrate that the aerial paths planned by our algorithm in realtime for unknown environments support reconstructing 3D models with comparable qualities and lead to shorter flight air time.},
     author = {Liu, Yilin and Cui, Ruiqi and Xie, Ke and Gong, Minglun and Huang, Hui},
@@ -28,19 +41,6 @@
     year = {2021},
     teaser = {dronefly.jpg},
     website = {https://vcc.tech/research/2021/DroneFly},
-    selected = true
-}
-
-@inproceedings{UrbanScene3D,
-    title={Capturing, Reconstructing, and Simulating: the UrbanScene3D Dataset},
-    author={Lin, Liqiang and Liu, Yilin and Hu, Yue and Yan, Xingguang and Xie, Ke  and Huang, Hui },
-    booktitle={European Conference on Computer Vision},
-    year={2022},
-    abstract={
-        We present UrbanScene3D, a large-scale data platform for research of urban scene perception and reconstruction. UrbanScene3D contains over 128k high-resolution images covering 16 scenes including large-scale real urban regions and synthetic cities with 136 $km^2$ area in total. The dataset also contains high-precision LiDAR scans and hundreds of image sets with different observation patterns, which provide a comprehensive benchmark to design and evaluate aerial path planning and 3D reconstruction algorithms. In addition, the dataset, which is built on Unreal Engine and Airsim simulator together with the manually annotated unique instance label for each building in the dataset, enables the generation of all kinds of data, e.g., 2D depth maps, 2D/3D bounding boxes, and 3D point cloud/mesh segmentations, etc. The simulator with physical engine and lighting system not only produce variety of data but also enable users to simulate cars or drones in the proposed urban environment for future research.
-    },
-    website = {https://vcc.tech/UrbanScene3D/},
-    teaser = {urban3d.jpg},
     selected = true
 }
 
