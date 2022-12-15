@@ -2,7 +2,7 @@
 layout: about
 title: About
 permalink: /
-subtitle: whatseven [at] gmail [dot] com
+subtitle: whatsevenlyl [at] gmail [dot] com
 
 profile:
   align: right
