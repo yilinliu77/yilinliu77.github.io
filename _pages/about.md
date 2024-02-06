@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: whatsevenlyl@gmail.com / <a href="https://yilinliu77.github.io/assets/pdf/cv_240203.pdf" target="_blank">CV</a> / <a href="https://scholar.google.com/citations?user=dIprnogAAAAJ&hl=en" target="_blank">Google Scholar</a>
+subtitle: whatsevenlyl@gmail.com / <a href="https://github.com/yilinliu77/yilinliu77.github.io/tree/main/assets/pdf/cv_240203.pdf" target="_blank">CV</a> / <a href="https://scholar.google.com/citations?user=dIprnogAAAAJ&hl=en" target="_blank">Google Scholar</a>
 
 
 profile:
