@@ -20,4 +20,4 @@ social: false # includes social icons at the bottom of the page
 
 I am a 2nd year Ph.D. student in [GrUVi](https://gruvi.cs.sfu.ca) at [Simon Fraser University](https://www.sfu.ca), under the supervision of [Prof. Hao (Richard) Zhang](https://www.cs.sfu.ca/~haoz). I obtained my master's degree in Computer Science in [VCC](https://vcc.tech/index.html) at [Shenzhen University](https://en.szu.edu.cn/), under the supervision of [Prof. Hui Huang](https://vcc.tech/~huihuang). Before that, I received my Bachelor's degree in Software Engineering from [Sichuan University](https://en.scu.edu.cn/).
 
-I am interested in Computer Graphics, Computer Vision and Robotics, especially in neural structural reconstruction from different data sources (e.g. images, point clouds, distance fields). I am also interested in developing data acquisition methods for high-quality 3D reconstruction.
+I am interested in Computer Graphics, Computer Vision and Robotics, especially in neural structural reconstruction and generation from different data sources (e.g. images, point clouds, distance fields).
