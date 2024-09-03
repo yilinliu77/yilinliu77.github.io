@@ -1,6 +1,19 @@
 ---
 ---
 
+@article{Ma2024wireframe,
+  author    = {Xueqi Ma and Yilin Liu and Wenjun Zhou and Ruowei Wang and Hui Huang},
+  title     = {Generating 3D House Wireframes with Semantics},
+  journal   = {European Conference on Computer Vision},
+  year      = {2024},
+  preview   = {house_wireframe.gif},
+  abstract  = {
+               We present a new approach for generating 3D house wireframes with semantic enrichment using an autoregressive model. Unlike conventional generative models that independently process vertices, edges, and faces, our approach employs a unified wire-based representation for improved coherence in learning 3D wireframe structures. By re-ordering wire sequences based on semantic meanings, we facilitate seamless semantic integration during sequence generation. Our two-phase technique merges a graph-based autoencoder with a transformer-based decoder to learn latent geometric tokens and generate semantic-aware wireframes. Through iterative prediction and decoding during inference, our model produces detailed wireframes that can be easily segmented into distinct components, such as walls, roofs, and rooms, reflecting the semantic essence of the shape. Empirical results on a comprehensive house dataset validate the superior accuracy, novelty, and semantic fidelity of our model compared to existing generative models. More results and details can be found on https://vcc.tech/research/2024/3DWire.
+               },
+  website   = {https://vcc.tech/research/2024/3DWire},
+  selected  = true,
+}
+
 @article{liu2024nvd,
     author = {Yilin Liu and Jiale Chen and Shanshan Pan and Daniel Cohen-Or and Hao Zhang and Hui Huang},
     title = {Split-and-Fit: Learning B-Reps via Structure-Aware Voronoi Partitioning},
@@ -11,14 +24,14 @@
     pages = {108:1--108:13},
     articleno = {108},
     numpages = {13},
-
     preview = {nv.jpg},
     abstract={
-       We introduce a novel method for acquiring boundary representations (B-Reps) of 3D CAD models which involves a two-step process: it first applies a spatial partitioning, referred to as the ``split``, followed by a ``fit`` operation to derive a single primitive within each partition. Specifically, our partitioning aims to produce the classical Voronoi diagram of the set of ground-truth (GT) B-Rep primitives. In contrast to prior B-Rep constructions which were bottom-up, either via direct primitive fitting or point clustering, our Split-and-Fit approach is top-down and structure-aware, since a Voronoi partition explicitly reveals both the number of and the connections between the primitives. We design a neural network to predict the Voronoi diagram from an input point cloud or distance field via a binary classification. We show that our network, coined NVD-Net for neural Voronoi diagrams, can effectively learn Voronoi partitions for CAD models from training data and exhibits superior generalization capabilities. Extensive experiments and evaluation demonstrate that the resulting B-Reps, consisting of parametric surfaces, curves, and vertices, are more plausible than those obtained by existing alternatives, with significant improvements in reconstruction quality. Code will be released on \url{https://github.com/yilinliu77/NVDNet}.
+       We introduce a novel method for acquiring boundary representations (B-Reps) of 3D CAD models which involves a two-step process: it first applies a spatial partitioning, referred to as the ``split``, followed by a ``fit`` operation to derive a single primitive within each partition. Specifically, our partitioning aims to produce the classical Voronoi diagram of the set of ground-truth (GT) B-Rep primitives. In contrast to prior B-Rep constructions which were bottom-up, either via direct primitive fitting or point clustering, our Split-and-Fit approach is top-down and structure-aware, since a Voronoi partition explicitly reveals both the number of and the connections between the primitives. We design a neural network to predict the Voronoi diagram from an input point cloud or distance field via a binary classification. We show that our network, coined NVD-Net for neural Voronoi diagrams, can effectively learn Voronoi partitions for CAD models from training data and exhibits superior generalization capabilities. Extensive experiments and evaluation demonstrate that the resulting B-Reps, consisting of parametric surfaces, curves, and vertices, are more plausible than those obtained by existing alternatives, with significant improvements in reconstruction quality. Code will be released on https://github.com/yilinliu77/NVDNet.
     },
     website = {https://github.com/yilinliu77/NVDNet},
-    selected = true
-
+    selected = true,
+    code={https://github.com/yilinliu77/NVDNet},
+    pdf={https://youtu.be/omS38sAbt9w},
 }
 
 @article{DroneRecon,
