@@ -1,6 +1,36 @@
 ---
 ---
 
+@misc{kan2025sage,
+  author   = {Mia Kan and Yilin Liu and Niloy Mitra},
+  title    = {SAGE: Structure-Aware Generative Video Transitions between Diverse Clips},
+  year={2025},
+  eprint={2510.24667},
+  url={https://arxiv.org/abs/2510.24667}, 
+  website  = {https://kan32501.github.io/sage.github.io/},
+  selected = true,
+  abstract = {Video transitions aim to synthesize intermediate frames between two clips, but naive approaches such as linear blending introduce artifacts that limit professional use or break temporal coherence. Traditional techniques (cross-fades, morphing, frame interpolation) and recent generative inbetweening methods can produce high-quality plausible intermediates, but they struggle with bridging diverse clips involving large temporal gaps or significant semantic differences, leaving a gap for content-aware and visually coherent transitions. We address this challenge by drawing on artistic workflows, distilling strategies such as aligning silhouettes and interpolating salient features to preserve structure and perceptual continuity. Building on this, we propose SAGE (Structure-Aware Generative vidEo transitions) as a zeroshot approach that combines structural guidance, provided via line maps and motion flow, with generative synthesis, enabling smooth, semantically consistent transitions without fine-tuning. Extensive experiments and comparison with current alternatives, namely [FILM, TVG, DiffMorpher, VACE, GI], demonstrate that SAGE outperforms both classical and generative baselines on quantitative metrics and user studies for producing transitions between diverse clips. Code to be released on acceptance.},
+  arxiv    = {2510.24667},
+  preview  = {hola.jpg},
+}
+
+@misc{liu2025brepler,
+  author   = {Yilin Liu and Duoteng Xu and Xingyao Yu and Xiang Xu and Daniel Cohen-Or and Hao Zhang and Hui Huang},
+  title    = {B-repLer: Semantic B-rep Latent Editor using Large Language Models},
+  author        = {Yilin Liu and Niladri Shekhar Dutt and Changjian Li and Niloy J. Mitra},
+  year          = {2025},
+  eprint        = {2508.10201},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.GR},
+  url           = {https://arxiv.org/abs/2508.10201},
+  preview  = {hola.jpg},
+  abstract = {
+              Multimodal large language models (mLLMs), trained in a mixed modal setting as a universal model, have been shown to compete with or even outperform many specialized algorithms for imaging and graphics tasks. As demonstrated across many applications, mLLMs' ability to jointly process image and text data makes them suitable for zero-shot applications or efficient fine-tuning towards specialized tasks. However, they have had limited success in 3D analysis and editing tasks. This is due to both the lack of suitable (annotated) 3D data as well as the idiosyncrasies of 3D representations. In this paper, we investigate whether mLLMs can be adapted to support high-level editing of Boundary Representation (B-rep) CAD objects. B-reps remain the industry-standard for precisely encoding engineering objects, but are challenging as the representation is fragile (i.e. can easily lead to invalid CAD objects) and no publicly available data source exists with semantically-annotated B-reps or CAD construction history. We present B-repLer as a finetuned mLLM that can understand text prompts and make semantic edits on given B-Reps to produce valid outputs. We enable this via a novel multimodal architecture, specifically designed to handle B-rep models, and demonstrate how existing CAD tools, in conjunction with mLLMs, can be used to automatically generate the required reasoning dataset, without relying on external annotations. We extensively evaluate B-repLer and demonstrate several text-based B-rep edits of various complexity, which were not previously possible.
+              },
+  selected = true,
+  arxiv    = {2508.10201}
+}
+
 @article{liu2025hola,
   author   = {Yilin Liu and Duoteng Xu and Xingyao Yu and Xiang Xu and Daniel Cohen-Or and Hao Zhang and Hui Huang},
   title    = {HoLa: B-Rep Generation using a Holistic Latent Representation},
