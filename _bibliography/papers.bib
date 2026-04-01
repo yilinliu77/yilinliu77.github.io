@@ -1,32 +1,54 @@
 ---
 ---
 
-@misc{kan2025sage,
-  author   = {Mia Kan and Yilin Liu and Niloy Mitra},
-  title    = {SAGE: Structure-Aware Generative Video Transitions between Diverse Clips},
-  year={2025},
-  eprint={2510.24667},
-  url={https://arxiv.org/abs/2510.24667}, 
-  website  = {https://kan32501.github.io/sage.github.io/},
-  selected = true,
-  abstract = {Video transitions aim to synthesize intermediate frames between two clips, but naive approaches such as linear blending introduce artifacts that limit professional use or break temporal coherence. Traditional techniques (cross-fades, morphing, frame interpolation) and recent generative inbetweening methods can produce high-quality plausible intermediates, but they struggle with bridging diverse clips involving large temporal gaps or significant semantic differences, leaving a gap for content-aware and visually coherent transitions. We address this challenge by drawing on artistic workflows, distilling strategies such as aligning silhouettes and interpolating salient features to preserve structure and perceptual continuity. Building on this, we propose SAGE (Structure-Aware Generative vidEo transitions) as a zeroshot approach that combines structural guidance, provided via line maps and motion flow, with generative synthesis, enabling smooth, semantically consistent transitions without fine-tuning. Extensive experiments and comparison with current alternatives, namely [FILM, TVG, DiffMorpher, VACE, GI], demonstrate that SAGE outperforms both classical and generative baselines on quantitative metrics and user studies for producing transitions between diverse clips. Code to be released on acceptance.},
-  arxiv    = {2510.24667},
-  preview  = {sage.png},
+@inproceedings{lilian2026pde,
+  author    = {Lilian Welschinger and Yilin Liu and Zican Wang and Niloy Mitra},
+  title     = {Learning to Solve PDEs on Neural Shape Representations},
+  year      = {2026},
+  booktitle = {Proc. CVPR},
+  website   = {https://welschinger.github.io/Learning-to-Solve-PDEs-on-Neural-Shape-Representations/},
+  selected  = true,
+  abstract  = {Solving partial differential equations (PDEs) on shapes underpins many shape analysis and engineering tasks; yet, prevailing PDE solvers operate on polygonal/triangle meshes while modern 3D assets increasingly live as neural representations. This mismatch leaves no suitable method to solve surface PDEs directly within the neural domain, forcing explicit mesh extraction or per-instance residual training, preventing end-to-end workflows. We present a novel, mesh-free formulation that learns a local update operator conditioned on neural (local) shape attributes, enabling surface PDEs to be solved directly where the (neural) data lives. The operator integrates naturally with prevalent neural surface representations, is trained once on a single representative shape, and generalizes across shape and topology variations, enabling accurate, fast inference without explicit meshing or per-instance optimization while preserving differentiability. Across analytic benchmarks (heat equation and Poisson solve on sphere) and real neural assets across different representations, our method slightly outperforms CPM while remaining reasonably close to FEM, and, to our knowledge, delivers the first end-to-end pipeline that solves surface PDEs on both neural and classical surface representations.},
+  arxiv     = {2512.21311},
+  preview   = {pde.png},
+  code      = {https://github.com/welschinger/Learning-to-Solve-PDEs-on-Neural-Shape-Representations}
 }
 
-@misc{liu2025brepler,
-  author   = {Yilin Liu and Duoteng Xu and Xingyao Yu and Xiang Xu and Daniel Cohen-Or and Hao Zhang and Hui Huang},
-  title    = {B-repLer: Semantic B-rep Latent Editor using Large Language Models},
+@inproceedings{kan2025sage,
+  author    = {Mia Kan and Yilin Liu and Niloy Mitra},
+  title     = {SAGE: Structure-Aware Generative Video Transitions between Diverse Clips},
+  year      = {2026},
+  booktitle = {Eurographics},
+  website   = {https://kan32501.github.io/sage.github.io/},
+  selected  = true,
+  abstract  = {Video transitions aim to synthesize intermediate frames between two clips, but naive approaches such as linear blending introduce artifacts that limit professional use or break temporal coherence. Traditional techniques (cross-fades, morphing, frame interpolation) and recent generative inbetweening methods can produce high-quality plausible intermediates, but they struggle with bridging diverse clips involving large temporal gaps or significant semantic differences, leaving a gap for content-aware and visually coherent transitions. We address this challenge by drawing on artistic workflows, distilling strategies such as aligning silhouettes and interpolating salient features to preserve structure and perceptual continuity. Building on this, we propose SAGE (Structure-Aware Generative vidEo transitions) as a zeroshot approach that combines structural guidance, provided via line maps and motion flow, with generative synthesis, enabling smooth, semantically consistent transitions without fine-tuning. Extensive experiments and comparison with current alternatives, namely [FILM, TVG, DiffMorpher, VACE, GI], demonstrate that SAGE outperforms both classical and generative baselines on quantitative metrics and user studies for producing transitions between diverse clips. Code to be released on acceptance.},
+  arxiv     = {2510.24667},
+  preview   = {sage.png},
+  code      = {https://github.com/kan32501/SAGE}
+}
+
+@inproceedings{liu2025brepler,
+  title         = {B-repLer: Semantic B-rep Latent Editor using Large Language Models},
   author        = {Yilin Liu and Niladri Shekhar Dutt and Changjian Li and Niloy J. Mitra},
-  year          = {2025},
-  eprint        = {2508.10201},
-  archiveprefix = {arXiv},
-  primaryclass  = {cs.GR},
-  url           = {https://arxiv.org/abs/2508.10201},
-  preview  = {brepler.jpg},
-  abstract = {Multimodal large language models (mLLMs), trained in a mixed modal setting as a universal model, have been shown to compete with or even outperform many specialized algorithms for imaging and graphics tasks. As demonstrated across many applications, mLLMs' ability to jointly process image and text data makes them suitable for zero-shot applications or efficient fine-tuning towards specialized tasks. However, they have had limited success in 3D analysis and editing tasks. This is due to both the lack of suitable (annotated) 3D data as well as the idiosyncrasies of 3D representations. In this paper, we investigate whether mLLMs can be adapted to support high-level editing of Boundary Representation (B-rep) CAD objects. B-reps remain the industry-standard for precisely encoding engineering objects, but are challenging as the representation is fragile (i.e. can easily lead to invalid CAD objects) and no publicly available data source exists with semantically-annotated B-reps or CAD construction history. We present B-repLer as a finetuned mLLM that can understand text prompts and make semantic edits on given B-Reps to produce valid outputs. We enable this via a novel multimodal architecture, specifically designed to handle B-rep models, and demonstrate how existing CAD tools, in conjunction with mLLMs, can be used to automatically generate the required reasoning dataset, without relying on external annotations. We extensively evaluate B-repLer and demonstrate several text-based B-rep edits of various complexity, which were not previously possible.},
-  selected = true,
-  arxiv    = {2508.10201}
+  year          = {2026},
+  booktitle = {Proc. SIGGRAPH},
+  website           = {https://yilinliu77.github.io/brepler.github.io/},
+  preview       = {brepler.jpg},
+  abstract      = {Multimodal large language models (mLLMs), trained in a mixed modal setting as a universal model, have been shown to compete with or even outperform many specialized algorithms for imaging and graphics tasks. As demonstrated across many applications, mLLMs' ability to jointly process image and text data makes them suitable for zero-shot applications or efficient fine-tuning towards specialized tasks. However, they have had limited success in 3D analysis and editing tasks. This is due to both the lack of suitable (annotated) 3D data as well as the idiosyncrasies of 3D representations. In this paper, we investigate whether mLLMs can be adapted to support high-level editing of Boundary Representation (B-rep) CAD objects. B-reps remain the industry-standard for precisely encoding engineering objects, but are challenging as the representation is fragile (i.e. can easily lead to invalid CAD objects) and no publicly available data source exists with semantically-annotated B-reps or CAD construction history. We present B-repLer as a finetuned mLLM that can understand text prompts and make semantic edits on given B-Reps to produce valid outputs. We enable this via a novel multimodal architecture, specifically designed to handle B-rep models, and demonstrate how existing CAD tools, in conjunction with mLLMs, can be used to automatically generate the required reasoning dataset, without relying on external annotations. We extensively evaluate B-repLer and demonstrate several text-based B-rep edits of various complexity, which were not previously possible.},
+  selected      = true,
+  arxiv         = {2508.10201}
+}
+
+@inproceedings{sam2025autobrep,
+  author    = {Xiang Xu and Pradeep Kumar Jayaraman and Joseph G. Lambourne and Yilin Liu and Durvesh Malpure and Pete Meltzer},
+  title     = {AutoBrep: Autoregressive B-Rep Generation with Unified Topology and Geometry},
+  year      = {2025},
+  booktitle = {Proc. SIGGRAPH Asia},
+  url       = {https://github.com/AutodeskAILab/AutoBrep},
+  preview   = {autobrep_teaser.png},
+  abstract  = {AutoBrep is a decoder-only Transformer model that autoregressively generates B-Rep geometry and topology tokens following a BFS order of the B-Rep topology graph. Geometric information is tokenized as bounding boxes paired with encoded UV-grid shape codes. Topological structure is represented via a special face identifier that maps face–edge adjacencies into reference tokens.},
+  selected  = true,
+  arxiv     = {2512.03018}
 }
 
 @article{liu2025hola,
@@ -42,7 +64,7 @@
               },
   website  = {https://vcc.tech/research/2025/HolaBRep},
   selected = true,
-  arxiv      = {2504.14257v2}
+  arxiv    = {2504.14257v2}
 }
 
 @inproceedings{CLRWire,
