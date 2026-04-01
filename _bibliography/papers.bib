@@ -1,6 +1,18 @@
 ---
 ---
 
+@inproceedings{liu2025brepler,
+  title     = {B-repLer: Semantic B-rep Latent Editor using Large Language Models},
+  author    = {Yilin Liu and Niladri Shekhar Dutt and Changjian Li and Niloy J. Mitra},
+  year      = {2026},
+  booktitle = {Proc. SIGGRAPH},
+  website   = {https://yilinliu77.github.io/brepler.github.io/},
+  preview   = {brepler.jpg},
+  abstract  = {Computer-Aided Design (CAD) models, given their compactness and precision, remain the industry standard for designing and fabricating engineering objects. However, language-guided CAD editing is still in its infancy, largely due to missing semantic connection between user commands and underlying shape geometry, a problem exacerbated by the shortage of paired text-and-edit CAD datasets. While recent Multimodal Large Language Models (mLLMs) have attempted to bridge this gap, their reliance on CAD construction history -- often an expensive and hard to obtain input -- severely limits their expressiveness and restricts their usage. We present B-repLer, a novel framework that directly connects natural language with editing CAD models by operating in a learned latent space. Importantly, our approach bypasses the need for construction history, enabling semantic edits on a wide range of geometries, from simple prismatic parts to complex freeform shapes defined by B-Spline surfaces. To facilitate this research, we introduce BrepEDIT-240K, the first large-scale dataset for this task. We demonstrate how this paired dataset can be automatically generated, (user) validated, and scaled by leveraging existing CAD tools, in conjunction with mLLMs, to create the required paired data without relying on any external annotations. Our results demonstrate that B-repLer can accurately perform complex edits on complex CAD shapes, even when the input edit specifications are high-level and ambiguous to interpret, consistently producing valid, high-quality CAD outputs enabling a class of text-guided edits not previously possible.},
+  selected  = true,
+  arxiv     = {2508.10201}
+}
+
 @inproceedings{lilian2026pde,
   author    = {Lilian Welschinger and Yilin Liu and Zican Wang and Niloy Mitra},
   title     = {Learning to Solve PDEs on Neural Shape Representations},
@@ -27,17 +39,6 @@
   code      = {https://github.com/kan32501/SAGE}
 }
 
-@inproceedings{liu2025brepler,
-  title         = {B-repLer: Semantic B-rep Latent Editor using Large Language Models},
-  author        = {Yilin Liu and Niladri Shekhar Dutt and Changjian Li and Niloy J. Mitra},
-  year          = {2026},
-  booktitle = {Proc. SIGGRAPH},
-  website           = {https://yilinliu77.github.io/brepler.github.io/},
-  preview       = {brepler.jpg},
-  abstract      = {Computer-Aided Design (CAD) models, given their compactness and precision, remain the industry standard for designing and fabricating engineering objects. However, language-guided CAD editing is still in its infancy, largely due to missing semantic connection between user commands and underlying shape geometry, a problem exacerbated by the shortage of paired text-and-edit CAD datasets. While recent Multimodal Large Language Models (mLLMs) have attempted to bridge this gap, their reliance on CAD construction history -- often an expensive and hard to obtain input -- severely limits their expressiveness and restricts their usage. We present B-repLer, a novel framework that directly connects natural language with editing CAD models by operating in a learned latent space. Importantly, our approach bypasses the need for construction history, enabling semantic edits on a wide range of geometries, from simple prismatic parts to complex freeform shapes defined by B-Spline surfaces. To facilitate this research, we introduce BrepEDIT-240K, the first large-scale dataset for this task. We demonstrate how this paired dataset can be automatically generated, (user) validated, and scaled by leveraging existing CAD tools, in conjunction with mLLMs, to create the required paired data without relying on any external annotations. Our results demonstrate that B-repLer can accurately perform complex edits on complex CAD shapes, even when the input edit specifications are high-level and ambiguous to interpret, consistently producing valid, high-quality CAD outputs enabling a class of text-guided edits not previously possible.},
-  selected      = true,
-  arxiv         = {2508.10201}
-}
 
 @inproceedings{sam2025autobrep,
   author    = {Xiang Xu and Pradeep Kumar Jayaraman and Joseph G. Lambourne and Yilin Liu and Durvesh Malpure and Pete Meltzer},
