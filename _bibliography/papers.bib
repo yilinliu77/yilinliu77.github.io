@@ -1,6 +1,28 @@
 ---
 ---
 
+@inproceedings{TopoGS,
+  title     = {TopoGS: Planar Reconstruction via Topology-aware 3D Gaussian Splatting},
+  author    = {Shanshan Pan and Jiale Chen and Yilin Liu and Hui Huang},
+  year      = {2026},
+  booktitle = {European Conference on Computer Vision},
+  preview   = {topogs.jpg},
+  abstract  = {Extracting structured, parametric 3D representations from raw images remains a fundamental challenge in computer vision and graphics. While recent advancements in the 3D Gaussian Splatting (3DGS) pipeline integrate planar primitives to yield compact and editable geometry, these approaches typically treat planes as isolated, discrete sets. This lack of topological connectivity hinders robust geometric reasoning, leading to fragmented reconstructions and misaligned boundaries that fall short of the precision for rigorous spatial analysis and professional design workflows. To address this, we introduce TopoGS, the first 3DGS framework to explicitly integrate both planar and topological constraints for coherent 3D reconstruction. Specifically, we extract global 2D topological relationships from multi-view image segmentations and anchor Gaussian primitives to these structural elements. This formulation enables the joint optimization of plane parameters, rendering fidelity, and topological adjacency. By enforcing strict multi-view consistency alongside these topological constraints, our method significantly mitigates geometric misalignments and produces connected, structured 3D models. Extensive evaluations on the ScanNet++ dataset demonstrate that TopoGS achieves state-of-the-art performance, providing a highly robust solution for generating accurate, topologically sound, and visually faithful scene representations.},
+  selected  = true,
+}
+
+@inproceedings{liu2026dualbrep,
+  title     = {DualBrep: A Dual-Field Continuous Representation for B-rep Modelling},
+  author    = {Yilin Liu and Pradeep Jayaraman and Chinthala Reddy and Xiang Xu and Hooman Shayani},
+  year      = {2026},
+  booktitle = {Proc. SIGGRAPH},
+  preview   = {dualbrep.jpg},
+  abstract  = {Boundary Representation (B-rep) is the most commonly used data format in Computer-Aided Design (CAD) due to its analytical precision and direct support for parametric editing. However, its heterogeneous structure--continuous parametric geometry combined with discrete topological graphs--poses fundamental challenges for deep learning. Existing methods often predict the heterogeneous B-rep graph directly, using fixed-size padding or sequential tokenization to handle varying primitive counts. These approaches struggle with the combinatorial complexity of CAD models. Furthermore, the discrete, non-differentiable nature of graph data prevents end-to-end optimization of geometry and watertightness. In this work, we introduce DualBrep, a novel continuous representation that unifies B-rep geometry and topology within a fully structured Euclidean domain. DualBrep encodes a CAD model using dual scalar fields: a Signed Distance Function (SDF) representing global shape geometry, and an Unsigned Distance Field (UDF) implicitly encoding topological structure via a Voronoi partitioning of surface elements. Rather than processing these fields independently, we compress them into a single latent space. While the dual-field formulation alone provides a flexible, primitive-free segmentation signal that adapts to arbitrary face counts and surface types, the shared latent makes generation tractable. A Flow Matching model can sample geometry and topology jointly from a single code, avoiding the error accumulation that plagues sequential B-rep predictors. Finally, a neural rebuilder extracts explicit B-rep models--comprising both prismatic and free-form primitives--directly from our continuous dual fields. We demonstrate that DualBrep is a robust backbone for CAD learning, achieving strong performance in point cloud reverse engineering and generative modeling via latent flow matching.},
+  selected  = true,
+  arxiv     = {2606.31579}
+  code      = {https://github.com/AutodeskAILab/DualBrep}
+}
+
 @inproceedings{liu2025brepler,
   title     = {B-repLer: Semantic B-rep Latent Editor using Large Language Models},
   author    = {Yilin Liu and Niladri Shekhar Dutt and Changjian Li and Niloy J. Mitra},
