@@ -3,18 +3,64 @@
 ---
 @charset "utf-8";
 
-// Dimensions
-$max-content-width: {{ site.max_width }};
+/* Built-in Sass modules you’ll likely use across partials */
+@use "sass:math";
+@use "sass:string";
 
-@import
-  "variables",
-  "themes",
-  "layout",
-  "base",
-  "distill",
-  "cv",
-  "font-awesome/fontawesome",
-  "font-awesome/brands",
-  "font-awesome/solid",
-  "font-awesome/regular"
-;
+/* Configure your design tokens BEFORE loading any of your partials.
+   Make sure `_sass/_variables.scss` declares `$max-content-width: 72rem !default;` */
+@use "variables" with (
+  $max-content-width: {{ site.max_width | default:  "930px" }}
+);
+
+/* Your project partials — convert these files to `@use "variables";`
+   (or `@use "variables" as *;`) inside each file and qualify variables if needed. */
+@use "themes";
+@use "layout";
+
+// Core styles organized by usage
+@use "typography";
+@use "navbar";
+@use "footer";
+@use "blog";
+@use "publications";
+@use "components";
+@use "utilities";
+
+// Other specialized styles
+@use "tabs";
+@use "teachings";
+@use "typograms";
+
+// ---------------------------------------------------------------------------
+// Local overrides — keep parity with the previous (v0.x) al-folio site.
+// This file shadows the gem-owned assets/css/main.scss; @use rules above are
+// copied verbatim from al_folio_core so all theme styles still compile.
+// ---------------------------------------------------------------------------
+
+// Font: the old Bootstrap-based site used the native system font stack
+// (Segoe UI on Windows, San Francisco on macOS). The v1 theme defaults to
+// Roboto — restore the classic stack here.
+// Weight: the old site used 400 (normal); the v1 theme defaults to 300
+// (light), which reads thinner — restore 400.
+body {
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  font-weight: 400;
+}
+
+// Link / URL accent color: restore the previous orange in light mode.
+// Dark mode already matches the old site (cyan), so it is left untouched.
+:root {
+  --global-theme-color: #d35400;
+  --global-hover-color: #d35400;
+}
