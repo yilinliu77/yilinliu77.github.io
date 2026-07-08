@@ -1,8 +1,8 @@
 metadata:
-  last_updated: '2026-07-03'
+  last_updated: '2026-07-08'
 papers:
   dIprnogAAAAJ:2osOgNQ5qMEC:
-    citations: 67
+    citations: 68
     title: Survey on path and view planning for UAVs
     year: '2020'
   dIprnogAAAAJ:9yKSN-GCB0IC:
@@ -26,7 +26,7 @@ papers:
     title: 'PA-Net: Plane Attention Network for real-time urban scene reconstruction'
     year: '2023'
   dIprnogAAAAJ:Y0pCki6q_DkC:
-    citations: 9
+    citations: 8
     title: 'Clr-wire: Towards continuous latent representations for 3d curve wireframe generation'
     year: '2025'
   dIprnogAAAAJ:YsMSGLbcyi4C:
@@ -38,7 +38,7 @@ papers:
     title: 'Urbanscene3d: A large scale urban scene dataset and simulator'
     year: '2021'
   dIprnogAAAAJ:qjMakFHDy7sC:
-    citations: 241
+    citations: 243
     title: 'Capturing, Reconstructing, and Simulating: The UrbanScene3D Dataset'
     year: '2022'
   dIprnogAAAAJ:u-x6o8ySG0sC:
@@ -50,6 +50,6 @@ papers:
     title: 'VGF-Net: Visual-Geometric fusion learning for simultaneous drone navigation and height mapping'
     year: '2021'
   dIprnogAAAAJ:zYLM7Y9cAGgC:
-    citations: 37
+    citations: 38
     title: 'Hola: B-rep generation using a holistic latent representation'
     year: '2025'
