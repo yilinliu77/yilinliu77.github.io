@@ -1,12 +1,12 @@
 metadata:
-  last_updated: '2026-07-29'
+  last_updated: '2026-08-07'
 papers:
   dIprnogAAAAJ:2osOgNQ5qMEC:
-    citations: 68
+    citations: 65
     title: Survey on path and view planning for UAVs
     year: '2020'
   dIprnogAAAAJ:9yKSN-GCB0IC:
-    citations: 81
+    citations: 82
     title: Offsite aerial path planning for efficient urban scene reconstruction
     year: '2020'
   dIprnogAAAAJ:IjCSPb-OGe4C:
@@ -14,15 +14,15 @@ papers:
     title: 'Split-and-fit: Learning b-reps via structure-aware voronoi partitioning'
     year: '2024'
   dIprnogAAAAJ:LkGwnXOMwfcC:
-    citations: 14
-    title: 'AutoBrep: Autoregressive B-Rep Generation with Unified Topology and Geometry'
+    citations: 17
+    title: 'Autobrep: Autoregressive b-rep generation with unified topology and geometry'
     year: '2025'
   dIprnogAAAAJ:Tyk-4Ss8FVUC:
     citations: 2
     title: 'B-repLer: Semantic B-rep Latent Editor using Large Language Models'
     year: '2025'
   dIprnogAAAAJ:UeHWp8X0CEIC:
-    citations: 34
+    citations: 36
     title: Learning Reconstructability for Drone Aerial Path Planning
     year: '2022'
   dIprnogAAAAJ:W7OEmFMy1HYC:
@@ -43,18 +43,18 @@ papers:
     year: '2026'
   dIprnogAAAAJ:_FxGoFyzp5QC:
     citations: 2
-    title: Learning to Solve PDEs on Neural Shape Representations
-    year: '2025'
+    title: Learning to solve pdes on neural shape representations
+    year: '2026'
   dIprnogAAAAJ:d1gkVwhDpl0C:
-    citations: 30
+    citations: 31
     title: 'Urbanscene3d: A large scale urban scene dataset and simulator'
     year: '2021'
   dIprnogAAAAJ:eQOLeE2rZwMC:
-    citations: 0
+    citations: 1
     title: 'CHOIR: Contact-aware 4D Hand-Object Interaction Reconstruction'
     year: '2026'
   dIprnogAAAAJ:qjMakFHDy7sC:
-    citations: 246
+    citations: 243
     title: 'Capturing, Reconstructing, and Simulating: The UrbanScene3D Dataset'
     year: '2022'
   dIprnogAAAAJ:u-x6o8ySG0sC:
@@ -70,6 +70,6 @@ papers:
     title: 'B-repLer: Language-guided Editing of CAD Models'
     year: '2025'
   dIprnogAAAAJ:zYLM7Y9cAGgC:
-    citations: 46
+    citations: 50
     title: 'Hola: B-rep generation using a holistic latent representation'
     year: '2025'
