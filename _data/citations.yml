@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-08-17'
+  last_updated: '2026-08-19'
 papers:
   dIprnogAAAAJ:2osOgNQ5qMEC:
     citations: 66
@@ -54,7 +54,7 @@ papers:
     title: 'CHOIR: Contact-aware 4D Hand-Object Interaction Reconstruction'
     year: '2026'
   dIprnogAAAAJ:qjMakFHDy7sC:
-    citations: 246
+    citations: 247
     title: 'Capturing, Reconstructing, and Simulating: The UrbanScene3D Dataset'
     year: '2022'
   dIprnogAAAAJ:u-x6o8ySG0sC:
