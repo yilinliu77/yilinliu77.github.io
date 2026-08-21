@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-08-19'
+  last_updated: '2026-08-21'
 papers:
   dIprnogAAAAJ:2osOgNQ5qMEC:
     citations: 66
@@ -14,7 +14,7 @@ papers:
     title: 'Split-and-fit: Learning b-reps via structure-aware voronoi partitioning'
     year: '2024'
   dIprnogAAAAJ:LkGwnXOMwfcC:
-    citations: 22
+    citations: 23
     title: 'Autobrep: Autoregressive b-rep generation with unified topology and geometry'
     year: '2025'
   dIprnogAAAAJ:Tyk-4Ss8FVUC:
@@ -54,7 +54,7 @@ papers:
     title: 'CHOIR: Contact-aware 4D Hand-Object Interaction Reconstruction'
     year: '2026'
   dIprnogAAAAJ:qjMakFHDy7sC:
-    citations: 247
+    citations: 248
     title: 'Capturing, Reconstructing, and Simulating: The UrbanScene3D Dataset'
     year: '2022'
   dIprnogAAAAJ:u-x6o8ySG0sC:
@@ -66,10 +66,10 @@ papers:
     title: 'VGF-Net: Visual-Geometric fusion learning for simultaneous drone navigation and height mapping'
     year: '2021'
   dIprnogAAAAJ:ufrVoPGSRksC:
-    citations: 2
+    citations: 3
     title: 'B-repLer: Language-guided Editing of CAD Models'
     year: '2025'
   dIprnogAAAAJ:zYLM7Y9cAGgC:
-    citations: 52
+    citations: 53
     title: 'Hola: B-rep generation using a holistic latent representation'
     year: '2025'
