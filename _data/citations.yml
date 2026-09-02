@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-08-31'
+  last_updated: '2026-09-02'
 papers:
   dIprnogAAAAJ:2osOgNQ5qMEC:
     citations: 66
@@ -62,7 +62,7 @@ papers:
     title: Aerial Path Planning for Online Real-Time Exploration and Offline High-Quality Reconstruction of Large-Scale Urban Scenes
     year: '2021'
   dIprnogAAAAJ:u5HHmVD_uO8C:
-    citations: 19
+    citations: 20
     title: 'VGF-Net: Visual-Geometric fusion learning for simultaneous drone navigation and height mapping'
     year: '2021'
   dIprnogAAAAJ:ufrVoPGSRksC:
